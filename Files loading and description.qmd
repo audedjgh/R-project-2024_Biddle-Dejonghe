@@ -9,6 +9,25 @@ format: html
 here::i_am("R-project-2024_Biddle-Dejonghe.Rproj")
 ```
 
-do you see my changes ?
+```{r}
+library(readr)
+Better_Life_Index_2022 <- read_delim("data/Better Life Index 2022.csv", 
++     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+library(readxl)
+Education <- read_excel("data/Education.xls", 
++     sheet = "Data")
+library(readxl)
+GDP_current_US_ <- read_excel("data/GDP (current US$).xls", 
++     sheet = "Data")
+library(readxl)
+GovReg_GHG_proxy_2023 <- read_excel("data/GovReg_GHG proxy_2023.xlsx", 
++     sheet = "EEA proxy dataset (plus)")
+library(readxl)
+Health <- read_excel("data/Health.xls")
+library(readxl)
+Share_of_energy_from_renewable_sources <- read_excel("data/Share of energy from renewable sources.xlsx", 
++     sheet = "EU27")
+```
+
 
 
