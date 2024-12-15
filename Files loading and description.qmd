@@ -72,3 +72,63 @@ Better_Life_Index_2022 |>
   ) |> 
   print()
 ```
+
+# Education information
+```{r}
+Education |> 
+    summarise(
+    rows = nrow(Education),  
+    cols = ncol(Education),
+    column_names = paste(names(Education), collapse = ", "),
+    data_types = paste(sapply(Education, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Annual GDP information
+```{r}
+GDP_current_US_ |> 
+    summarise(
+    rows = nrow(GDP_current_US_),  
+    cols = ncol(GDP_current_US_),
+    column_names = paste(names(GDP_current_US_), collapse = ", "),
+    data_types = paste(sapply(GDP_current_US_, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Approximated estimates for greenhouse gas emissions information
+```{r}
+GovReg_GHG_proxy_2023 |> 
+    summarise(
+    rows = nrow(GovReg_GHG_proxy_2023),  
+    cols = ncol(GovReg_GHG_proxy_2023),
+    column_names = paste(names(GovReg_GHG_proxy_2023), collapse = ", "),
+    data_types = paste(sapply(GovReg_GHG_proxy_2023, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Health information
+```{r}
+Health |> 
+    summarise(
+    rows = nrow(Health),  
+    cols = ncol(Health),
+    column_names = paste(names(Health), collapse = ", "),
+    data_types = paste(sapply(Health, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Share of energy from renewable resources information
+```{r}
+Share_of_energy_from_renewable_sources |> 
+    summarise(
+    rows = nrow(Share_of_energy_from_renewable_sources),  
+    cols = ncol(Share_of_energy_from_renewable_sources),
+    column_names = paste(names(Share_of_energy_from_renewable_sources), collapse = ", "),
+    data_types = paste(sapply(Share_of_energy_from_renewable_sources, class), collapse = ", ")
+  ) |> 
+  print()
+```
