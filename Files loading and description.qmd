@@ -60,3 +60,15 @@ print("https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%2
 # Finally, we delve into the dataset for share of energy from renewable resources from 2004 to 2022, issued by Eurostat. The short assessment of renewable energy sources (SHARES) tool provides in-depth statistics on the fraction of renewable energy sources to gross final energy consumption in EU member states. The data covers electricity, heating and cooling, and transport. Key points include national shares of renewable energy, normalised values for hydropower and wind power, and compliance with sustainability criteria.
 ```
 
+# Better Life Index information
+```{r}
+library(dplyr)
+Better_Life_Index_2022 |> 
+    summarise(
+    rows = nrow(Better_Life_Index_2022),  
+    cols = ncol(Better_Life_Index_2022),
+    column_names = paste(names(Better_Life_Index_2022), collapse = ", "),
+    data_types = paste(sapply(Better_Life_Index_2022, class), collapse = ", ")
+  ) |> 
+  print()
+```
