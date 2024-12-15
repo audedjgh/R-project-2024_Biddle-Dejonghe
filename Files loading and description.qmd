@@ -11,6 +11,7 @@ here::i_am("R-project-2024_Biddle-Dejonghe.Rproj")
 ```
 # INTRODUCTION
 
+<<<<<<< HEAD
 This document will show :
 - the sources used for the project with their description 
 - the description of the work of joining and cleaning the data
@@ -152,5 +153,136 @@ It provides in-depth statistics on the fraction of renewable energy sources to g
 With the Better Life Index, the value associated to each country is calculated as a weighted score of 11 topics. The topics are housing, income, jobs, community, education, environment, governance, health, life satisfaction, safety, and work-life balance.
 
 As for the education dataset, we can focus on the variable "Educational attainment, at least completed upper secondary, population 25+, total (%) (cumulative)", as it measures the proportion of the adult population with at least a high school diploma, which is a crucial idnicator of human capital development, and helps understand a country's workforce competitiveness.
+=======
+# File import
+```{r}
+library(readr)
+Better_Life_Index_2022 <- read_delim("data/Better Life Index 2022.csv", 
++     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+library(readxl)
+Education <- read_excel("data/Education.xls", 
++     sheet = "Data")
+library(readxl)
+GDP_current_US_ <- read_excel("data/GDP (current US$).xls", 
++     sheet = "Data")
+library(readxl)
+GovReg_GHG_proxy_2023 <- read_excel("data/GovReg_GHG proxy_2023.xlsx", 
++     sheet = "EEA proxy dataset (plus)")
+library(readxl)
+Health <- read_excel("data/Health.xls")
+library(readxl)
+Share_of_energy_from_renewable_sources <- read_excel("data/Share of energy from renewable sources.xlsx", 
++     sheet = "EU27")
+```
+>>>>>>> 11a07a8941f561ce7872d5d1988ad62d32ab0122
 
+# Link to our GitHub project
+```{r}
+print("https://github.com/audedjgh/R-project-2024_Biddle-Dejonghe")
+```
+
+# Link to sources
+```{r}
+print("https://www.oecd-ilibrary.org/social-issues-migration-health/data/oecd-social-and-welfare-statistics/better-life-index-edition-2022_a4815531-en")
+print("https://data.worldbank.org/topic/education")
+print("https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=EU")
+print("https://www.eea.europa.eu/en/datahub/datahubitem-view/f6e68f73-b494-4f8c-8c73-8a153a53f64a")
+print("https://data.worldbank.org/topic/health")
+print("https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES)")
+```
+
+# Description of the sources
+```{r}
+# Our first dataset includes data for the OECD's Better Life Index in 2022. This compares well-being in all 27 EU countries, based on 11 topics concerning quality of life and material living conditions. Air pollution, life satisfaction, educational attainment, student skills, and years in education are among the indicators available.
+
+# The education dataset from the World Bank database has 165 indicators to choose from, regarding education levels, employment, government investment and more. Some of the key aspects are enrolment rates, gender disparities, and pupil-teacher ratios. It classes nations - we'll consider all 27 EU countries - into 4 income groups (high income, upper middle income, lower middle income, low income).
+
+# The GDP in current US$ dataset is provided by the World Bank, and displays annual data on the gross domestic product of countries worldwide. It's calculated with official exchange rates, without adjusting for inflation or purchasing power parity, and represents the monetary value of all finished goods and services produced in an economy.
+
+# The following dataset is for approximated estimates for greenhouse gas emissions in different sectors across countries, sourced from the European Environment Agency Datahub. It offers estimates for total emissions along with industry-specific contributions, for instance, those relating to energy, transport, and agriculture. The data is crucial for policymakers, researchers and environmentalists to study progress in emission reductions,
+
+# Then, we have the health dataset, supplied by the World Bank. It comprises an extensive collection of indicators to choose from, such as life expectancy, mortality rates, risk factors, disease-specific data, healthcare spending, and access to essential services.
+
+# Finally, we delve into the dataset for share of energy from renewable resources from 2004 to 2022, issued by Eurostat. The short assessment of renewable energy sources (SHARES) tool provides in-depth statistics on the fraction of renewable energy sources to gross final energy consumption in EU member states. The data covers electricity, heating and cooling, and transport. Key points include national shares of renewable energy, normalised values for hydropower and wind power, and compliance with sustainability criteria.
+```
+
+# Better Life Index information
+```{r}
+library(dplyr)
+Better_Life_Index_2022 |> 
+    summarise(
+    rows = nrow(Better_Life_Index_2022),  
+    cols = ncol(Better_Life_Index_2022),
+    column_names = paste(names(Better_Life_Index_2022), collapse = ", "),
+    data_types = paste(sapply(Better_Life_Index_2022, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Education information
+```{r}
+Education |> 
+    summarise(
+    rows = nrow(Education),  
+    cols = ncol(Education),
+    column_names = paste(names(Education), collapse = ", "),
+    data_types = paste(sapply(Education, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Annual GDP information
+```{r}
+GDP_current_US_ |> 
+    summarise(
+    rows = nrow(GDP_current_US_),  
+    cols = ncol(GDP_current_US_),
+    column_names = paste(names(GDP_current_US_), collapse = ", "),
+    data_types = paste(sapply(GDP_current_US_, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Approximated estimates for greenhouse gas emissions information
+```{r}
+GovReg_GHG_proxy_2023 |> 
+    summarise(
+    rows = nrow(GovReg_GHG_proxy_2023),  
+    cols = ncol(GovReg_GHG_proxy_2023),
+    column_names = paste(names(GovReg_GHG_proxy_2023), collapse = ", "),
+    data_types = paste(sapply(GovReg_GHG_proxy_2023, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Health information
+```{r}
+Health |> 
+    summarise(
+    rows = nrow(Health),  
+    cols = ncol(Health),
+    column_names = paste(names(Health), collapse = ", "),
+    data_types = paste(sapply(Health, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Share of energy from renewable resources information
+```{r}
+Share_of_energy_from_renewable_sources |> 
+    summarise(
+    rows = nrow(Share_of_energy_from_renewable_sources),  
+    cols = ncol(Share_of_energy_from_renewable_sources),
+    column_names = paste(names(Share_of_energy_from_renewable_sources), collapse = ", "),
+    data_types = paste(sapply(Share_of_energy_from_renewable_sources, class), collapse = ", ")
+  ) |> 
+  print()
+```
+
+# Most important variables
+```{r}
+# With the Better Life Index, the value associated to each country is calculated as a weighted score of 11 topics. The topics are housing, income, jobs, community, education, environment, governance, health, life satisfaction, safety, and work-life balance.
+
+# As for the education dataset, we can focus on the variable "Educational attainment, at least completed upper secondary, population 25+, total (%) (cumulative)", as it measures the proportion of the adult population with at least a high school diploma, which is a crucial idnicator of human capital development, and helps understand a country's workforce competitiveness.
+```
 
