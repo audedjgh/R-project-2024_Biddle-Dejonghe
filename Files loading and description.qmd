@@ -9,6 +9,7 @@ format: html
 here::i_am("R-project-2024_Biddle-Dejonghe.Rproj")
 ```
 
+# File import
 ```{r}
 library(readr)
 Better_Life_Index_2022 <- read_delim("data/Better Life Index 2022.csv", 
@@ -29,5 +30,18 @@ Share_of_energy_from_renewable_sources <- read_excel("data/Share of energy from 
 +     sheet = "EU27")
 ```
 
+# Link to our GitHub project
+```{r}
+print("https://github.com/audedjgh/R-project-2024_Biddle-Dejonghe")
+```
 
+# Link to sources
+```{r}
+print("https://www.oecd-ilibrary.org/social-issues-migration-health/data/oecd-social-and-welfare-statistics/better-life-index-edition-2022_a4815531-en")
+print("https://data.worldbank.org/topic/education")
+print("https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=EU")
+print("https://www.eea.europa.eu/en/datahub/datahubitem-view/f6e68f73-b494-4f8c-8c73-8a153a53f64a")
+print("https://data.worldbank.org/topic/health")
+print("https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES)")
+```
 
