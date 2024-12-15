@@ -45,3 +45,18 @@ print("https://data.worldbank.org/topic/health")
 print("https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES)")
 ```
 
+# Description of the sources
+```{r}
+# Our first dataset includes data for the OECD's Better Life Index in 2022. This compares well-being in all 27 EU countries, based on 11 topics concerning quality of life and material living conditions. Air pollution, life satisfaction, educational attainment, student skills, and years in education are among the indicators available.
+
+# The education dataset from the World Bank database has 165 indicators to choose from, regarding education levels, employment, government investment and more. Some of the key aspects are enrolment rates, gender disparities, and pupil-teacher ratios. It classes nations - we'll consider all 27 EU countries - into 4 income groups (high income, upper middle income, lower middle income, low income).
+
+# The GDP in current US$ dataset is provided by the World Bank, and displays annual data on the gross domestic product of countries worldwide. It's calculated with official exchange rates, without adjusting for inflation or purchasing power parity, and represents the monetary value of all finished goods and services produced in an economy.
+
+# The following dataset is for approximated estimates for greenhouse gas emissions in different sectors across countries, sourced from the European Environment Agency Datahub. It offers estimates for total emissions along with industry-specific contributions, for instance, those relating to energy, transport, and agriculture. The data is crucial for policymakers, researchers and environmentalists to study progress in emission reductions,
+
+# Then, we have the health dataset, supplied by the World Bank. It comprises an extensive collection of indicators to choose from, such as life expectancy, mortality rates, risk factors, disease-specific data, healthcare spending, and access to essential services.
+
+# Finally, we delve into the dataset for share of energy from renewable resources from 2004 to 2022, issued by Eurostat. The short assessment of renewable energy sources (SHARES) tool provides in-depth statistics on the fraction of renewable energy sources to gross final energy consumption in EU member states. The data covers electricity, heating and cooling, and transport. Key points include national shares of renewable energy, normalised values for hydropower and wind power, and compliance with sustainability criteria.
+```
+
