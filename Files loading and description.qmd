@@ -132,3 +132,11 @@ Share_of_energy_from_renewable_sources |>
   ) |> 
   print()
 ```
+
+# Most important variables
+```{r}
+# With the Better Life Index, the value associated to each country is calculated as a weighted score of 11 topics. The topics are housing, income, jobs, community, education, environment, governance, health, life satisfaction, safety, and work-life balance.
+
+# As for the education dataset, we can focus on the variable "Educational attainment, at least completed upper secondary, population 25+, total (%) (cumulative)", as it measures the proportion of the adult population with at least a high school diploma, which is a crucial idnicator of human capital development, and helps understand a country's workforce competitiveness.
+```
+
