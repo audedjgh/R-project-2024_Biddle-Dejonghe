@@ -1,7 +1,9 @@
 ---
 title: "Files loading and description"
 author: "Aude Dejonghe and Carlos Biddle"
-format: html
+format: 
+  html: default
+  pdf: default
 ---
 
 ```{r}
@@ -14,12 +16,10 @@ here::i_am("R-project-2024_Biddle-Dejonghe.Rproj")
 # INTRODUCTION
 
 This document will show:
-<br>
-- The sources used for the project with their description 
-<br>
-- The description of the work of joining and cleaning the data
-<br>
-- The explanation of our research question
+
+  - The sources used for the project with their description 
+  - The description of the work of joining and cleaning the data
+  - The explanation of our research question
 
 To begin with, click [here](https://github.com/audedjgh/R-project-2024_Biddle-Dejonghe) to access our github project.
 
@@ -74,17 +74,12 @@ suppressMessages(Share_of_renewable_sources <- read_excel(
 
 ## Link to sources
 
-[Better Life Index 2022](https://www.oecd-ilibrary.org/social-issues-migration-health/data/oecd-social-and-welfare-statistics/better-life-index-edition-2022_a4815531-en)
-
-[Education](https://data.worldbank.org/topic/education)
-
-[GDP](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=EU)
-
-[Gas emissions](https://www.eea.europa.eu/en/datahub/datahubitem-view/f6e68f73-b494-4f8c-8c73-8a153a53f64a)
-
-[Health](https://data.worldbank.org/topic/health)
-
-[Share of renewable energy](https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES))
+ - [Better Life Index 2022](https://www.oecd-ilibrary.org/social-issues-migration-health/data/oecd-social-and-welfare-statistics/better-life-index-edition-2022_a4815531-en)
+- [Education](https://data.worldbank.org/topic/education)
+- [GDP](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=EU)
+- [Gas emissions](https://www.eea.europa.eu/en/datahub/datahubitem-view/f6e68f73-b494-4f8c-8c73-8a153a53f64a)
+- [Health](https://data.worldbank.org/topic/health)
+- [Share of renewable energy](https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES))
 
 
 
