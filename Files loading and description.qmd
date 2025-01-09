@@ -25,51 +25,79 @@ To begin with, click [here](https://github.com/audedjgh/R-project-2024_Biddle-De
 
 ```{r}
 #| message: false
-library(vroom)
-library(dplyr)
-```
-
-
-# FILES IMPORT
-
-```{r}
-#| message: false
-
+#| warning: false
+# Load required libraries
 library(readr)
 library(readxl)
+library(dplyr)
 
-Better_Life_Index_2022 <- read_delim(
-  file = "data/Better Life Index 2022.csv", 
-  delim = ";", 
-  escape_double = FALSE, 
-  trim_ws = TRUE,
-  show_col_types = FALSE
-)
+# Define NA values
+na_values <- c("NA", "NO", "IE", "NO,NA", "NO, NA", "NO,NE", "", "N/A")
 
-suppressMessages(Education <- read_excel(
-  path = "data/Education.xls", 
-  sheet = "Data"
-))
+# Clean numeric function
+clean_numeric <- function(x) {
+  if(is.character(x)) {
+    x <- gsub(",", ".", x)
+    x <- gsub(" ", "", x)
+    suppressWarnings(as.numeric(x))
+  } else {
+    x
+  }
+}
 
-suppressMessages(GDP <- read_excel(
-  path = "data/GDP (current US$).xls", 
-  sheet = "Data"
-))
+# Simplified clean_dataset function
+clean_dataset <- function(df) {
+  id_columns <- c("Country", "country", "COUNTRY", "Year", "year", "YEAR")
+  
+  df %>%
+    mutate(across(
+      where(is.character) & !any_of(id_columns),
+      ~clean_numeric(.)
+    ))
+}
 
-suppressMessages(Gas_emissions <- read_excel(
-  path = "data/GovReg_GHG proxy_2023.xlsx", 
-  sheet = "EEA proxy dataset (plus)"
-))
-
-suppressMessages(Health <- read_excel(
-  path = "data/Health.xls"
-))
-
-suppressMessages(Share_of_renewable_sources <- read_excel(
-  path = "data/Share of energy from renewable sources.xlsx", 
-  sheet = "EU27"
-))
+# Import and clean datasets
+suppressMessages({
+  Better_Life_Index_2022 <- read_delim(
+    file = "data/Better Life Index 2022.csv", 
+    delim = ";", 
+    escape_double = FALSE, 
+    trim_ws = TRUE,
+    na = na_values,
+    show_col_types = FALSE
+  ) %>% clean_dataset()
+  
+  Education <- read_excel(
+    path = "data/Education.xls", 
+    sheet = "Data",
+    na = na_values
+  ) %>% clean_dataset()
+  
+  GDP <- read_excel(
+    path = "data/GDP (current US$).xls", 
+    sheet = "Data",
+    na = na_values
+  ) %>% clean_dataset()
+  
+  Gas_emissions <- read_excel(
+    path = "data/GovReg_GHG proxy_2023.xlsx", 
+    sheet = "EEA proxy dataset (plus)",
+    na = na_values
+  ) %>% clean_dataset()
+  
+  Health <- read_excel(
+    path = "data/Health.xls", 
+    na = na_values
+  ) %>% clean_dataset()
+  
+  Share_of_renewable_sources <- read_excel(
+    path = "data/Share of energy from renewable sources.xlsx", 
+    sheet = "EU27",
+    na = na_values
+  ) %>% clean_dataset()
+})
 ```
+
 
 
 ## Link to sources
