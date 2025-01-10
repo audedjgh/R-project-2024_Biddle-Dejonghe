@@ -59,7 +59,7 @@ clean_dataset <- function(df) {
 # Import and clean datasets
 suppressMessages({
   Better_Life_Index_2022 <- read_delim(
-    file = "data/Better Life Index 2022.csv", 
+    file = "data/2022 Better Life Index.csv", 
     delim = ";", 
     escape_double = FALSE, 
     trim_ws = TRUE,
@@ -112,7 +112,7 @@ suppressMessages({
 
 
 
-# DESCRIPTION OF THE SOURCES
+# DESCRIPTION OF THE DATASETS
 
 ## Better Life Index 
 
@@ -192,7 +192,7 @@ With the Better Life Index, the value associated to each country is calculated a
 
 ## Education
 
-As for the education dataset, we can focus on the variable "Educational attainment, at least completed upper secondary, population 25+, total (%) (cumulative)", as it measures the proportion of the adult population with at least a high school diploma, which is a crucial idnicator of human capital development, and helps understand a country's workforce competitiveness. The dataset encompasses variables like gross and net enrollment rates at different education levels, literacy rates by age group, and teacher-pupil ratios. It also includes government education expenditure as a percentage of GDP and learning outcomes, represented by scores from international assessments such as PISA and TIMSS.
+As for the education dataset, we can focus on the variable "Educational attainment, at least completed upper secondary, population 25+, total (%) (cumulative)", as it measures the proportion of the adult population with at least a high school diploma, which is a crucial indicator of human capital development, and helps understand a country's workforce competitiveness. The dataset encompasses variables like gross and net enrollment rates at different education levels, literacy rates by age group, and teacher-pupil ratios. It also includes government education expenditure as a percentage of GDP and learning outcomes, represented by scores from international assessments such as PISA and TIMSS.
 
 
 ## GDP
@@ -240,3 +240,13 @@ Data Visualization: To understand these relationships better, a cross-country co
 Temporal Trends: Analyzing how investments in renewables have evolved over the past decades relative to socioeconomic changes could uncover critical insights about long-term drivers.
 
 Barriers in Low-GDP Nations: Examining the unique challenges faced by economically weaker European countries in scaling renewable investments, despite EU-wide climate goals, could highlight gaps in support mechanisms.
+
+
+
+# DATA ANALYSIS
+...
+
+
+
+# CONCLUSION
+...
