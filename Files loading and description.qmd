@@ -59,7 +59,7 @@ clean_dataset <- function(df) {
 # Import and clean datasets
 suppressMessages({
   Better_Life_Index_2022 <- read_delim(
-    file = "Clean 2022 Better Life Index.csv", 
+    file = "data/Clean 2022 Better Life Index.csv", 
     delim = ";", 
     escape_double = FALSE, 
     trim_ws = TRUE,
@@ -68,30 +68,30 @@ suppressMessages({
   ) %>% clean_dataset()
   
   Education <- read_excel(
-    path = "Education.xls", 
+    path = "data/Education.xls", 
     sheet = "Data",
     na = na_values
   ) %>% clean_dataset()
   
   GDP <- read_excel(
-    path = "GDP (current US$).xls", 
+    path = "data/GDP (current US$).xls", 
     sheet = "Data",
     na = na_values
   ) %>% clean_dataset()
   
   Gas_emissions <- read_excel(
-    path = "GovReg_GHG proxy_2023.xlsx", 
+    path = "data/GovReg_GHG proxy_2023.xlsx", 
     sheet = "EEA proxy dataset (plus)",
     na = na_values
   ) %>% clean_dataset()
   
   Health <- read_excel(
-    path = "Health.xls", 
+    path = "data/Health.xls", 
     na = na_values
   ) %>% clean_dataset()
   
   Share_of_renewable_sources <- read_excel(
-    path = "Share of energy from renewable sources.xlsx", 
+    path = "data/Share of energy from renewable sources.xlsx", 
     sheet = "EU27",
     na = na_values
   ) %>% clean_dataset()
