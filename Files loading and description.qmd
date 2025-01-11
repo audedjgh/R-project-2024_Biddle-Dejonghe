@@ -406,7 +406,9 @@ ggplot(data_merged, aes(x = GDP_Value, y = Renewable_Share)) +
   theme_minimal()
 
 ```
+The scatter plot illustrates the correlation between GDP and the share of renewable energy for EU countries from 2004 to 2022. Most data points are grouped toward the lower end of the GDP bracket, which indicates most of these nations have relatively low GDP values. In this region, there is a wide variation in renewable energy shares, from close to zero to exceeding 40%.
 
+As GDP grows, renewable energy share fluctuates less, with wealthier countries generally exhibiting lower shares. The trend line suggests a weak negative relationship: higher-GDP nations tend to depend less on renewable energy. Nevertheless, the heavy concentration of data at lower GDP levels and the limit presence of higher-GDP countries suggest that the trend is primarily driven by lower-GDP nations.
 
 
 ## To erase at the end : ideas for the analysis 
