@@ -288,24 +288,26 @@ library(dplyr)
 
 Better_Life_Index_2013 |>
   filter(Indicator == "Life satisfaction") |>
-  ggplot(aes(x = reorder(Country, Value), y = Value)) + 
+  ggplot(aes(x = reorder(Country, Value), y = Value, fill = Value)) + 
   geom_bar(stat = "identity") +  
   coord_flip() + 
   labs(title = "Life Satisfaction by Country (2013)", 
        x = "Country", 
        y = "Life Satisfaction Value") +
-  theme_minimal()
+  theme_minimal() +
+  scale_fill_gradient(low = "lightblue", high = "darkblue") # Gradient color scale
 
 Better_Life_Index_2022 |>
   filter(Indicator == "Life satisfaction") |>
-  ggplot(aes(x = reorder(Country, Value), y = Value)) + 
+  ggplot(aes(x = reorder(Country, Value), y = Value, fill = Value)) + 
   geom_bar(stat = "identity") +  
   coord_flip() + 
   labs(title = "Life Satisfaction by Country (2022)", 
        x = "Country", 
        y = "Life Satisfaction Value") +
-  theme_minimal()
-  
+  theme_minimal() +
+  scale_fill_gradient(low = "lightgreen", high = "darkgreen") # Gradient color scale
+
 ```
 The overall "Life Satisfaction" values appear to have slightly increased for most countries from 2013 to 2022, with Finland emerging as a standout performer by 2022. While the relative rankings for some countries like Greece and Hungary remain low, the overall progress indicates that life satisfaction is improving globally, albeit at different rates across regions.
 
@@ -328,12 +330,13 @@ overall_renewable_share_long <- Overall_share_of_renewable_sources %>%
 #Create comparable base in 2022 to see ranking
 overall_renewable_share_long |>
   filter(Year == 2022) |>
-  ggplot(aes(x = reorder(`Country Name`, Share), y = Share)) + 
+  ggplot(aes(x = reorder(`Country Name`, Share), y = Share, fill = Share)) + 
   geom_bar(stat = "identity") +  
   coord_flip() + 
   labs(title = "Share of renewable energy by EU Country (2022)", 
        x = "Country", 
        y = "Share of renewable energy (in%)") +
+  scale_fill_gradient(low = "#FFB84D", high = "#FF4500") +  # Set gradient colors
   theme_minimal()
 ```
 
