@@ -367,6 +367,46 @@ Some other countries like France Poland and Hungary, are more or less coherent w
 
 However correlation is not proven and a bit blurry, so we're going to deepen the analysis, enlarging the criterions to more measurable ones, as "Life satisfaction" is hard to measure and not 100% reliable data.
 
+## Relationship between GDP and share of renewable energy
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)  # For axis formatting
+
+# Filter GDP dataset for years 2004-2022
+GDP_filtered <- GDP |>
+  select("Country Name", "2004":"2022") |>
+  pivot_longer(cols = starts_with("200"), 
+               names_to = "Year", 
+               values_to = "GDP_Value") |>
+  mutate(Year = as.integer(Year))  # Ensure Year is numeric
+
+# Reshape renewable sources dataset
+renewable_long <- Overall_share_of_renewable_sources |>
+  pivot_longer(cols = starts_with("200"),
+               names_to = "Year",
+               values_to = "Renewable_Share") |>
+  mutate(Year = as.integer(Year))  # Ensure Year is numeric
+
+# Merge the reshaped datasets on Country Name and Year
+data_merged <- merge(GDP_filtered, renewable_long, by = c("Country Name", "Year"))
+
+# Plot GDP vs Renewable Energy Share for the merged dataset
+ggplot(data_merged, aes(x = GDP_Value, y = Renewable_Share)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +  # Include confidence interval
+  labs(
+    title = "GDP vs. Share of Renewable Energy", 
+    x = "GDP Value (in USD)", 
+    y = "Share of Renewable Energy (%)"
+  ) +
+  scale_x_continuous(labels = label_number(scale = 1e-12, suffix = "T")) +  # GDP in trillions
+  scale_y_continuous(labels = label_percent(scale = 1)) +  # Renewable Share as percentage
+  theme_minimal()
+
+```
+
 
 
 ## To erase at the end : ideas for the analysis 
