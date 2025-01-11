@@ -372,7 +372,7 @@ However correlation is not proven and a bit blurry, so we're going to deepen the
 {library(dplyr)
 library(tidyr)
 library(ggplot2)
-library(scales)  # For axis formatting
+library(scales)
 
 # Filter GDP dataset for years 2004-2022
 GDP_filtered <- GDP |>
@@ -409,6 +409,74 @@ ggplot(data_merged, aes(x = GDP_Value, y = Renewable_Share)) +
 The scatter plot illustrates the correlation between GDP and the share of renewable energy for EU countries from 2004 to 2022. Most data points are grouped toward the lower end of the GDP bracket, which indicates most of these nations have relatively low GDP values. In this region, there is a wide variation in renewable energy shares, from close to zero to exceeding 40%.
 
 As GDP grows, renewable energy share fluctuates less, with wealthier countries generally exhibiting lower shares. The trend line suggests a weak negative relationship: higher-GDP nations tend to depend less on renewable energy. Nevertheless, the heavy concentration of data at lower GDP levels and the limit presence of higher-GDP countries suggest that the trend is primarily driven by lower-GDP nations.
+
+## Distribution of renewable energy share according to education level
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+# Step 1: Filter Education dataset
+Education_filtered <- Education |>
+  filter(`Indicator Name` == "Educational attainment, at least completed upper secondary, population 25+, total (%) (cumulative)") |>
+  select(-c(`2000`, `2001`, `2002`, `2003`, `2023`)) # Remove years 2000, 2001, 2002, 2003, and 2023
+
+# Step 2: Filter Renewable Energy dataset (years 2004-2022)
+RenewableEnergy_filtered <- Overall_share_of_renewable_sources |>
+  select(`Country Name`, `2004`:`2022`) # Filter only years 2004-2022
+
+# Step 3: Combine both datasets by 'Country' (or another key column)
+combined_data <- Education_filtered |>
+  left_join(RenewableEnergy_filtered, by = "Country Name")
+
+# Step 4: Rename the year columns to avoid conflicts
+combined_data <- combined_data |>
+  rename_at(vars(starts_with("2004")), ~ paste0("RenewableShare_", .))
+
+# Step 5: Reshape data to long format for ggplot
+long_data <- combined_data |>
+  pivot_longer(cols = starts_with("RenewableShare_"), names_to = "Year", values_to = "RenewableShare")
+
+# Step 6: Create categories for education levels based on mean and standard deviation thresholds
+
+# Extract the relevant columns for education data (2005-2022)
+relevant_columns <- combined_data[, c("RenewableShare_2004.x", "2005.x", "2006.x", "2007.x", "2008.x", "2009.x", 
+                                      "2010.x", "2011.x", "2012.x", "2013.x", "2014.x", 
+                                      "2015.x", "2016.x", "2017.x", "2018.x", "2019.x", 
+                                      "2020.x", "2021.x", "2022.x")]
+
+# Convert the data to numeric (ignoring non-numeric entries)
+relevant_columns <- as.data.frame(lapply(relevant_columns, as.numeric))
+
+# Calculate mean and standard deviation for each column
+mean_values <- colMeans(relevant_columns, na.rm = TRUE)
+sd_values <- apply(relevant_columns, 2, sd, na.rm = TRUE)
+
+# Define thresholds for high, medium, and low categories based on mean and standard deviation
+high_thresholds <- mean_values + sd_values
+low_thresholds <- mean_values - sd_values
+
+# Categorize each education value based on the thresholds
+long_data <- long_data |>
+  mutate(EducationLevel = case_when(
+    `Value` >= high_thresholds[as.integer(substr(Year, 1, 4)) - 2004 + 1] ~ "High", # Check if value is above the high threshold
+    `Value` <= low_thresholds[as.integer(substr(Year, 1, 4)) - 2004 + 1] ~ "Low",  # Check if value is below the low threshold
+    TRUE ~ "Medium"  # Otherwise, categorize as Medium
+  ))
+
+# Step 7: Create the boxplot
+ggplot(long_data, aes(x = EducationLevel, y = RenewableShare, fill = EducationLevel)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribution of Renewable Energy Share by Education Level",
+    x = "Education Level",
+    y = "Renewable Energy Share (%)"
+  ) +
+  theme_minimal() +
+  scale_fill_manual(values = c("Low" = "red", "Medium" = "yellow", "High" = "green"))
+
+```
 
 
 ## To erase at the end : ideas for the analysis 
