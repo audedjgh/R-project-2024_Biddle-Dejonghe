@@ -30,9 +30,14 @@ To begin with, click [here](https://github.com/audedjgh/R-project-2024_Biddle-De
 library(readr)
 library(readxl)
 library(dplyr)
+library(stringr)
 
 # Define NA values
 na_values <- c("NA", "NO", "IE", "NO,NA", "NO, NA", "NO,NE", "", "N/A")
+
+# Creating the list of EU countries to filter data
+EU_countries <- c("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czechia", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden"
+)
 
 # Clean numeric function
 clean_numeric <- function(x) {
@@ -47,9 +52,9 @@ clean_numeric <- function(x) {
 
 # Simplified clean_dataset function
 clean_dataset <- function(df) {
-  id_columns <- c("Country", "country", "COUNTRY", "Year", "year", "YEAR")
+  id_columns <- c("LOCATION", "INDICATOR", "Indicator", "Inequality", "Unit Code", "Unit", "Country", "country", "COUNTRY", "Year", "year", "YEAR", "Country Name", "Country Code", "Indicator Name", "Indicator Code", "Country name", "Description as in CRF", "Sector_name", "Unit", "Emissions")
   
-  df %>%
+  df |>
     mutate(across(
       where(is.character) & !any_of(id_columns),
       ~clean_numeric(.)
@@ -60,6 +65,15 @@ clean_dataset <- function(df) {
 suppressMessages({
   Better_Life_Index_2022 <- read_delim(
     file = "data/Clean 2022 Better Life Index.csv", 
+    delim = ",", 
+    escape_double = FALSE, 
+    trim_ws = TRUE,
+    na = na_values,
+    show_col_types = FALSE
+  ) %>% clean_dataset()
+  
+  Better_Life_Index_2013 <- read_delim(
+    file = "data/Better Life Index 2013.csv", 
     delim = ";", 
     escape_double = FALSE, 
     trim_ws = TRUE,
@@ -92,10 +106,43 @@ suppressMessages({
   
   Share_of_renewable_sources <- read_excel(
     path = "data/Share of energy from renewable sources.xlsx", 
-    sheet = "EU27",
+    sheet = "SUMMARY",
+    skip = 1,
     na = na_values
   ) %>% clean_dataset()
 })
+
+
+# Filter datasets on information wanted
+
+Better_Life_Index_2022 <- Better_Life_Index_2022 |>
+  select(Country, Indicator, Unit, Value) |>
+  filter(Country %in% EU_countries)
+
+Better_Life_Index_2013 <- Better_Life_Index_2013 |>
+  select(Country, Indicator, Inequality, Value) |>
+  filter(Country %in% EU_countries)
+
+Education <- Education |>
+  select(`Country Name`, `Indicator Name`, matches("^20\\d{2}$")) |>
+  filter(`Country Name` %in% EU_countries)
+
+Gas_emissions <- Gas_emissions |>
+  select(`Country name`, `Description as in CRF`, Sector_name, Unit, Emissions) |>
+  filter(`Country name` %in% EU_countries, str_detect(`Sector_name`, "Total"))
+
+GDP <- GDP |>
+  select(`Country Name`, `Indicator Name`, matches("^20\\d{2}$")) |>
+  filter(`Country Name` %in% EU_countries)
+
+Health <- Health |>
+  select(`Country Name`, `Indicator Name`, matches("^20\\d{2}$")) |>
+  filter(`Country Name` %in% EU_countries)
+
+Overall_share_of_renewable_sources <- Share_of_renewable_sources |>
+  slice(1:38) |>
+  select(2:21) |>
+  filter(`Country Name` %in% EU_countries)
 ```
 
 
@@ -108,7 +155,6 @@ suppressMessages({
 - [Gas emissions](https://www.eea.europa.eu/en/datahub/datahubitem-view/f6e68f73-b494-4f8c-8c73-8a153a53f64a)
 - [Health](https://data.worldbank.org/topic/health)
 - [Share of renewable energy](https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES))
-
 
 
 
@@ -244,8 +290,13 @@ Barriers in Low-GDP Nations: Examining the unique challenges faced by economical
 
 
 # DATA ANALYSIS
-## Better Life Index (2022)
+## Better Life Index 
 Our analysis begins with a chart representing the average score for the student skills and life satisfaction categories each country obtained in 2022...
+
+```{r}
+
+```
+
 
 
 # CONCLUSION
