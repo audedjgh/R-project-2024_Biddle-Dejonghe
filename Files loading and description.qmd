@@ -148,6 +148,8 @@ Overall_share_of_renewable_sources <- Share_of_renewable_sources |>
   slice(1:38) |>
   select(2:21) |>
   filter(`Country Name` %in% EU_countries)
+
+colnames(Overall_share_of_renewable_sources)[-1] <- substr(colnames(Overall_share_of_renewable_sources)[-1], 1, 4)
 ```
 
 ## Link to sources
@@ -308,6 +310,59 @@ Better_Life_Index_2022 |>
 The overall "Life Satisfaction" values appear to have slightly increased for most countries from 2013 to 2022, with Finland emerging as a standout performer by 2022. While the relative rankings for some countries like Greece and Hungary remain low, the overall progress indicates that life satisfaction is improving globally, albeit at different rates across regions.
 
 We can start by stating our hypothesis : Countries with higher life satisfaction, better education, and lower air pollution levels are more likely to invest in renewable energy.
+
+Let's then find out if the top countries in Life satisfaction are the same ones that are top ranks when seeing their share or renewable energy.
+
+```{r}
+library(tidyr)
+
+# First, let's prepare the data 
+# We'll convert it from wide format (years as columns) to long format
+overall_renewable_share_long <- Overall_share_of_renewable_sources %>%
+  pivot_longer(
+    cols = -`Country Name`,  
+    names_to = "Year",
+    values_to = "Share"
+  )
+
+#Create comparable base in 2022 to see ranking
+overall_renewable_share_long |>
+  filter(Year == 2022) |>
+  ggplot(aes(x = reorder(`Country Name`, Share), y = Share)) + 
+  geom_bar(stat = "identity") +  
+  coord_flip() + 
+  labs(title = "Share of renewable energy by EU Country (2022)", 
+       x = "Country", 
+       y = "Share of renewable energy (in%)") +
+  theme_minimal()
+```
+
+```{r}
+# Create the line plot
+ggplot(overall_renewable_share_long, aes(x = Year, y = Share, color = `Country Name`, group = `Country Name`)) +
+  geom_line(linewidth = 0.5) +
+  geom_point(size = 1) +
+  theme_minimal() +
+  labs(
+    title = "Share of Renewable Energy Sources Over Time in EU countries",
+    x = "Year",
+    y = "Share of Renewable Energy (%)",
+    color = "Country"
+  ) +
+  theme(
+    legend.position = "right",
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+Thanks to these graphs, we can visualize the evolution of EU countries through time regarding their share of renewable energy among total energy from 2004 and 2022. In other words, it shows how much shares of renewable energy their investment in this matter allowed them to have. 
+We can see that the shares are globally increasing for every EU country studied.
+But, the main difference with the life satisfaction critera studied before is that the top country is Sweden, with a large difference if we compare it to the other countries. 
+Then we find Finland and Denmark in top 5, which is coherent with the Life satisfaction criteria.
+Some other countries like France Poland and Hungary, are more or less coherent with analysis made previously.
+
+However correlation is not proven and a bit blurry, so we're going to deepen the analysis, enlarging the criterions to more measurable ones, as "Life satisfaction" is hard to measure and not 100% reliable data.
 
 
 
