@@ -265,9 +265,18 @@ Temporal Trends: Analyzing how investments in renewables have evolved over the p
 
 Barriers in Low-GDP Nations: Examining the unique challenges faced by economically weaker European countries in scaling renewable investments, despite EU-wide climate goals, could highlight gaps in support mechanisms.
 
+
+
+
+
 # DATA ANALYSIS
 
-## Better Life Index
+In this document, we'll try to see and assess any links between certain socioeconomic factors of EU countries and their willingness to invest in renewable energy.
+
+We can start by stating our intuition hypothesis : Countries with higher life satisfaction, better education, and lower air pollution levels are more likely to invest in renewable energy.
+
+
+## View on life disparities between EU countries
 
 Our analysis begins with a chart representing the average score of life satisfaction each country obtained in 2013 and in 2022.
 
@@ -297,6 +306,118 @@ Better_Life_Index_2022 |>
   
 ```
 The overall "Life Satisfaction" values appear to have slightly increased for most countries from 2013 to 2022, with Finland emerging as a standout performer by 2022. While the relative rankings for some countries like Greece and Hungary remain low, the overall progress indicates that life satisfaction is improving globally, albeit at different rates across regions.
+
+We can start by stating our hypothesis : Countries with higher life satisfaction, better education, and lower air pollution levels are more likely to invest in renewable energy.
+
+
+
+## To erase at the end : ideas for the analysis 
+Suggested Graphs:
+
+    Histograms or Boxplots:
+        Show the distribution of key variables (e.g., "share of renewable energy," "GDP," "employment rate").
+    Correlation Heatmap:
+        Use a heatmap to visualize the correlations between variables like GDP, life satisfaction, air pollution, and renewable energy investments.
+
+3. Analysis Over Time
+Tasks:
+
+    Trend Analysis:
+        Analyze how renewable energy investments have changed over time.
+        Compare this to trends in socioeconomic variables like GDP, air pollution, and education.
+
+    Graphs for Trends:
+        Line Charts:
+            Show the evolution of renewable energy investments over time for different countries.
+            Overlay trends of key socioeconomic variables (e.g., life expectancy, GDP).
+        Stacked Area Charts:
+            Display the share of renewable energy production by country over time.
+
+4. Statistical Analysis
+A. Correlation Analysis
+
+    Use correlation coefficients to determine the strength of relationships between variables (e.g., between renewable energy share and air pollution, GDP).
+
+Code Example in R:
+
+cor_matrix <- cor(data[, c("Renewable_Energy_Share", "GDP", "Life_Expectancy", "Air_Pollution")], use = "complete.obs")
+heatmap(cor_matrix, main = "Correlation Heatmap", col = colorRampPalette(c("blue", "white", "red"))(50))
+
+B. Linear Regression
+
+    Perform a multiple linear regression to quantify the influence of socioeconomic factors on renewable energy investments.
+
+Model:
+Renewable Energy Share=β0+β1(GDP)+β2(Air Pollution)+β3(Education)+ϵ
+Renewable Energy Share=β0​+β1​(GDP)+β2​(Air Pollution)+β3​(Education)+ϵ
+Code Example in R:
+
+model <- lm(Renewable_Energy_Share ~ GDP + Air_Pollution + Education, data = data)
+summary(model)
+
+    Interpret the regression coefficients:
+        Positive coefficients mean the variable drives renewable energy investment.
+        Negative coefficients mean it hinders renewable energy investment.
+
+C. Chi-Square Test for Independence
+
+    Use a Chi-Square test to explore categorical relationships. For example, you could test if the share of renewable energy is associated with categorical factors like "employment rate" or "education level" groups.
+
+Code Example:
+
+chisq_test <- chisq.test(table(data$Renewable_Energy_Category, data$Education_Level))
+print(chisq_test)
+
+    Check if the p-value < 0.05 to confirm significant relationships.
+
+5. Comparing Across Countries
+Tasks:
+
+    Clustering:
+        Use clustering methods (e.g., k-means) to group countries based on their socioeconomic profiles and renewable energy investments.
+
+Code Example:
+
+library(cluster)
+cluster_data <- data[, c("GDP", "Air_Pollution", "Renewable_Energy_Share")]
+kmeans_result <- kmeans(cluster_data, centers = 3)
+fviz_cluster(kmeans_result, data = cluster_data)
+
+    Barplots:
+        Compare countries in terms of key variables using grouped bar charts.
+
+Suggested Graphs:
+
+    Barplots:
+        Rank countries by their share of renewable energy or investment levels.
+    Scatter Plots:
+        Plot GDP vs. renewable energy share with country labels.
+
+6. Conclusion
+
+    Summarize findings:
+        Which socioeconomic factors have the strongest influence on renewable energy investments?
+        How do these factors vary by country and over time?
+    Discuss policy implications:
+        What policies should governments adopt to drive renewable energy investment?
+
+Recap of Necessary Graphs:
+
+    Histograms/Boxplots: Distribution of key variables.
+    Correlation Heatmap: Relationship between variables.
+    Line Charts: Trends over time for renewable energy and key factors.
+    Barplots: Comparison between countries.
+    Scatter Plots: Relationship between two variables.
+    Cluster Diagram: Group countries by profiles.
+
+Summary of Calculations:
+
+    Summary Statistics: Mean, median, etc., for variables.
+    Correlation Analysis: Quantify relationships.
+    Linear Regression: Identify drivers of renewable energy investments.
+    Chi-Square Test: Test independence between categorical variables.
+    Clustering: Group countries by socioeconomic indicators.
+
 
 
 
