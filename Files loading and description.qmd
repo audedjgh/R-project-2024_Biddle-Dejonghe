@@ -6,20 +6,25 @@ format:
   pdf: default
 ---
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
 ```{r}
 #| message: false
 library(here)
 here::i_am("R-project-2024_Biddle-Dejonghe.Rproj")
 ```
 
-
 # INTRODUCTION
 
 This document will show:
 
-  - The sources used for the project with their description 
-  - The description of the work of joining and cleaning the data
-  - The explanation of our research question
+-   The sources used for the project with their description
+-   The description of the work of joining and cleaning the data
+-   The explanation of our research question
 
 To begin with, click [here](https://github.com/audedjgh/R-project-2024_Biddle-Dejonghe) to access our github project.
 
@@ -121,7 +126,7 @@ Better_Life_Index_2022 <- Better_Life_Index_2022 |>
 
 Better_Life_Index_2013 <- Better_Life_Index_2013 |>
   select(Country, Indicator, Inequality, Value) |>
-  filter(Country %in% EU_countries)
+  filter(Country %in% EU_countries, Inequality == "Total")
 
 Education <- Education |>
   select(`Country Name`, `Indicator Name`, matches("^20\\d{2}$")) |>
@@ -145,122 +150,96 @@ Overall_share_of_renewable_sources <- Share_of_renewable_sources |>
   filter(`Country Name` %in% EU_countries)
 ```
 
-
-
 ## Link to sources
 
- - [Better Life Index 2022](https://www.oecd-ilibrary.org/social-issues-migration-health/data/oecd-social-and-welfare-statistics/better-life-index-edition-2022_a4815531-en)
-- [Education](https://data.worldbank.org/topic/education)
-- [GDP](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=EU)
-- [Gas emissions](https://www.eea.europa.eu/en/datahub/datahubitem-view/f6e68f73-b494-4f8c-8c73-8a153a53f64a)
-- [Health](https://data.worldbank.org/topic/health)
-- [Share of renewable energy](https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES))
-
-
+-   [Better Life Index 2022](https://www.oecd-ilibrary.org/social-issues-migration-health/data/oecd-social-and-welfare-statistics/better-life-index-edition-2022_a4815531-en)
+-   [Education](https://data.worldbank.org/topic/education)
+-   [GDP](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=EU)
+-   [Gas emissions](https://www.eea.europa.eu/en/datahub/datahubitem-view/f6e68f73-b494-4f8c-8c73-8a153a53f64a)
+-   [Health](https://data.worldbank.org/topic/health)
+-   [Share of renewable energy](https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES))
 
 # DESCRIPTION OF THE DATASETS
 
-## Better Life Index 
+## Better Life Index
 
-Our first dataset includes data for the OECD's Better Life Index in 2022. The OECD Better Life Index Edition 2022 provides data on well-being across OECD member countries and some partners (we'll concentrate on 27 EU countries), covering topics such as housing, income, jobs, education, community, health, environment, safety, life satisfaction, and work-life balance. The data is compiled from national statistical offices, OECD surveys, and other relevant tools, ensuring global comparability of quality-of-life metrics. This dataset is updated annually, though some components, like subjective well-being or community engagement metrics, depend on periodic survey collections. It enables cross-country comparisons and offers insights into policy impacts on citizens' lives.
-Since our research is going to compare data over years, this is an example of the better life index, but we'll download and summarise other files like this to have an overview time wise. The data is available since 2013, each year.
+Our first dataset includes data for the OECD's Better Life Index in 2022. The OECD Better Life Index Edition 2022 provides data on well-being across OECD member countries and some partners (we'll concentrate on 27 EU countries), covering topics such as housing, income, jobs, education, community, health, environment, safety, life satisfaction, and work-life balance. The data is compiled from national statistical offices, OECD surveys, and other relevant tools, ensuring global comparability of quality-of-life metrics. This dataset is updated annually, though some components, like subjective well-being or community engagement metrics, depend on periodic survey collections. It enables cross-country comparisons and offers insights into policy impacts on citizens' lives. Since our research is going to compare data over years, this is an example of the better life index, but we'll download and summarise other files like this to have an overview time wise. The data is available since 2013, each year.
 
-|                        |                      |
-|------------------------|----------------------|
+|                        |                                  |
+|------------------------|----------------------------------|
 | Number of observations | `r NROW(Better_Life_Index_2022)` |
 | Number of variables    | `r NCOL(Better_Life_Index_2022)` |
 
-
 ## Education
 
-The education dataset from the World Bank database has 165 indicators to choose from, including enrollment rates, literacy levels, teacher-pupil ratios, government spending on education, and learning outcomes. This data is drawn from government ministries, international organizations, and World Bank studies. It is updated annually, though some indicators, like results from international assessments (e.g., PISA, TIMSS), are released every few years. The dataset supports monitoring of global education progress, disparities, and achievements, particularly in relation to Sustainable Development Goal 4 on quality education.
-We'll consider all 27 EU countries - into 4 income groups (high income, upper middle income, lower middle income, low income).
+The education dataset from the World Bank database has 165 indicators to choose from, including enrollment rates, literacy levels, teacher-pupil ratios, government spending on education, and learning outcomes. This data is drawn from government ministries, international organizations, and World Bank studies. It is updated annually, though some indicators, like results from international assessments (e.g., PISA, TIMSS), are released every few years. The dataset supports monitoring of global education progress, disparities, and achievements, particularly in relation to Sustainable Development Goal 4 on quality education. We'll consider all 27 EU countries - into 4 income groups (high income, upper middle income, lower middle income, low income).
 
-|                        |                      |
-|------------------------|----------------------|
+|                        |                     |
+|------------------------|---------------------|
 | Number of observations | `r NROW(Education)` |
 | Number of variables    | `r NCOL(Education)` |
 
-
 ## GDP
 
-This dataset provides annual Gross Domestic Product (GDP) figures in current US dollars for countries worldwide, with detailed data on the European Union. The World Bank collects this information from national accounts, statistical agencies, and IMF sources, ensuring consistency across countries. Updates occur annually, with quarterly estimates provided for certain regions. This dataset is vital for evaluating economic performance, identifying growth trends, and comparing the GDP of different regions and countries over time.
-It's calculated with official exchange rates, without adjusting for inflation or purchasing power parity, and represents the monetary value of all finished goods and services produced in an economy.
+This dataset provides annual Gross Domestic Product (GDP) figures in current US dollars for countries worldwide, with detailed data on the European Union. The World Bank collects this information from national accounts, statistical agencies, and IMF sources, ensuring consistency across countries. Updates occur annually, with quarterly estimates provided for certain regions. This dataset is vital for evaluating economic performance, identifying growth trends, and comparing the GDP of different regions and countries over time. It's calculated with official exchange rates, without adjusting for inflation or purchasing power parity, and represents the monetary value of all finished goods and services produced in an economy.
 
-|                        |                      |
-|------------------------|----------------------|
+|                        |               |
+|------------------------|---------------|
 | Number of observations | `r NROW(GDP)` |
 | Number of variables    | `r NCOL(GDP)` |
 
-
 ## Gas emissions
 
-The European Environment Agency (EEA) Renewable Energy Data tracks the use and contribution of renewable energy in Europe, including electricity, heating, and transport sectors. It estimates the share of renewables in gross final energy consumption and monitors progress toward EU renewable energy targets. This data is collected from national energy statistics and harmonized through Eurostat and other EU reporting mechanisms. It is updated annually, following the SHARES (Short Assessment of Renewable Energy Sources) methodology, ensuring alignment with EU directives. The dataset is a key resource for assessing the EU’s progress toward climate and energy goals.
-It offers estimates for total emissions along with industry-specific contributions, for instance, those relating to energy, transport, and agriculture. The data is crucial for policymakers, researchers and environmentalists to study progress in emission reductions.
-Since our research is going to compare data over years, we plan to do the same thing as for "Better Life Index" dataset and join several years data together.
+The European Environment Agency (EEA) Renewable Energy Data tracks the use and contribution of renewable energy in Europe, including electricity, heating, and transport sectors. It estimates the share of renewables in gross final energy consumption and monitors progress toward EU renewable energy targets. This data is collected from national energy statistics and harmonized through Eurostat and other EU reporting mechanisms. It is updated annually, following the SHARES (Short Assessment of Renewable Energy Sources) methodology, ensuring alignment with EU directives. The dataset is a key resource for assessing the EU’s progress toward climate and energy goals. It offers estimates for total emissions along with industry-specific contributions, for instance, those relating to energy, transport, and agriculture. The data is crucial for policymakers, researchers and environmentalists to study progress in emission reductions. Since our research is going to compare data over years, we plan to do the same thing as for "Better Life Index" dataset and join several years data together.
 
-|                        |                      |
-|------------------------|----------------------|
+|                        |                         |
+|------------------------|-------------------------|
 | Number of observations | `r NROW(Gas_emissions)` |
 | Number of variables    | `r NCOL(Gas_emissions)` |
-
 
 ## Health
 
 Then, we have the health dataset, supplied by the World Bank.It includes indicators such as life expectancy, healthcare expenditure, immunization rates, and disease prevalence. The data is sourced from national health agencies, WHO publications, and World Bank studies. It is updated annually, with some metrics dependent on periodic demographic and health surveys (e.g., DHS) or WHO global health reports. This dataset enables the analysis of health outcomes, resource allocation, and comparisons of health system performance across countries and regions.
 
-|                        |                      |
-|------------------------|----------------------|
+|                        |                  |
+|------------------------|------------------|
 | Number of observations | `r NROW(Health)` |
 | Number of variables    | `r NCOL(Health)` |
 
-
 ## Share of renewable energy
 
-Finally, the Eurostat Renewable Energy Database (SHARES) focuses on tracking renewable energy trends in the EU, measuring energy production, installed capacity, and the proportion of renewables in the energy mix. It also evaluates progress toward national and EU-wide renewable energy goals. Data is collected from national statistical offices and harmonized through EU legislative frameworks. Updates are conducted annually, using the SHARES methodology, which ensures consistent reporting and alignment with EU policies. This dataset provides detailed insights for policymakers and stakeholders engaged in the EU Green Deal and sustainable energy initiatives.
-It provides in-depth statistics on the fraction of renewable energy sources to gross final energy consumption in EU member states. The data covers electricity, heating and cooling, and transport. Key points include national shares of renewable energy, normalised values for hydropower and wind power, and compliance with sustainability criteria.
+Finally, the Eurostat Renewable Energy Database (SHARES) focuses on tracking renewable energy trends in the EU, measuring energy production, installed capacity, and the proportion of renewables in the energy mix. It also evaluates progress toward national and EU-wide renewable energy goals. Data is collected from national statistical offices and harmonized through EU legislative frameworks. Updates are conducted annually, using the SHARES methodology, which ensures consistent reporting and alignment with EU policies. This dataset provides detailed insights for policymakers and stakeholders engaged in the EU Green Deal and sustainable energy initiatives. It provides in-depth statistics on the fraction of renewable energy sources to gross final energy consumption in EU member states. The data covers electricity, heating and cooling, and transport. Key points include national shares of renewable energy, normalised values for hydropower and wind power, and compliance with sustainability criteria.
 
-|                        |                      |
-|------------------------|----------------------|
+|                        |                                      |
+|------------------------|--------------------------------------|
 | Number of observations | `r NROW(Share_of_renewable_sources)` |
 | Number of variables    | `r NCOL(Share_of_renewable_sources)` |
 
-
-
-
 # MOST IMPORTANT VARIABLES
 
-
-## Better Life Index 
+## Better Life Index
 
 With the Better Life Index, the value associated to each country is calculated as a weighted score of 11 topics. The dataset includes variables such as housing conditions, measured by the number of rooms per person and housing affordability, and income, represented by disposable household income and wealth per capita. It also tracks job-related metrics, like employment rates and job security, alongside education levels, community engagement, self-reported health status, air quality indicators for the environment, and crime rates for safety. Additional variables include life satisfaction and work-life balance, focusing on time spent between work and leisure.
-
 
 ## Education
 
 As for the education dataset, we can focus on the variable "Educational attainment, at least completed upper secondary, population 25+, total (%) (cumulative)", as it measures the proportion of the adult population with at least a high school diploma, which is a crucial indicator of human capital development, and helps understand a country's workforce competitiveness. The dataset encompasses variables like gross and net enrollment rates at different education levels, literacy rates by age group, and teacher-pupil ratios. It also includes government education expenditure as a percentage of GDP and learning outcomes, represented by scores from international assessments such as PISA and TIMSS.
 
-
 ## GDP
 
 The dataset provides annual GDP figures in current USD for countries worldwide, along with growth rates that reflect year-on-year economic performance. It also breaks down sectoral contributions to GDP, such as agriculture, industry, and services, and facilitates regional comparisons of economic output across countries.
 
-
-## Gas emissions 
+## Gas emissions
 
 Key variables include the share of renewable energy in gross final energy consumption, the contribution of specific energy sources such as wind, solar, hydro, biomass, and geothermal, and the sectoral usage of renewables in electricity, heating, and transport. The dataset also monitors progress toward EU renewable energy targets.
-
 
 ## Health
 
 The dataset includes variables like life expectancy at birth, healthcare expenditure (total and per capita), and immunization rates for diseases like measles and polio. It tracks the prevalence of diseases, including communicable and non-communicable conditions, as well as health resources, such as the number of doctors, nurses, and hospital beds per capita.
 
-
 ## Share of renewable energy
 
 This dataset tracks annual renewable energy production in GWh or TWh, the installed capacity of renewable energy plants in MW, and the proportion of renewables in the total energy mix. It also includes progress indicators to assess alignment with national and EU-wide renewable energy targets.
-
-
 
 # RESEARCH QUESTION DEVELOPMENT
 
@@ -278,7 +257,6 @@ Education and Public Awareness: Education plays a critical role in shaping attit
 
 Social Welfare and Policy Support: Social welfare systems indirectly influence renewable energy investments. Countries with robust welfare systems, like Denmark or Sweden, can more easily absorb the social costs of transitioning from fossil fuels to renewables, such as retraining workers or subsidizing green energy access for low-income households. Additionally, higher levels of social trust and cooperative governance in these nations contribute to smoother implementation of renewable energy projects.
 
-
 ## Potential Areas for Further Exploration
 
 Data Visualization: To understand these relationships better, a cross-country comparative analysis can be conducted using visual tools like scatterplots, heatmaps, or GIS maps. For instance, correlating GDP per capita with renewable energy capacity installed could reveal interesting patterns across Europe.
@@ -287,17 +265,41 @@ Temporal Trends: Analyzing how investments in renewables have evolved over the p
 
 Barriers in Low-GDP Nations: Examining the unique challenges faced by economically weaker European countries in scaling renewable investments, despite EU-wide climate goals, could highlight gaps in support mechanisms.
 
-
-
 # DATA ANALYSIS
-## Better Life Index 
-Our analysis begins with a chart representing the average score for the student skills and life satisfaction categories each country obtained in 2022...
+
+## Better Life Index
+
+Our analysis begins with a chart representing the average score of life satisfaction each country obtained in 2013 and in 2022.
 
 ```{r}
+library(ggplot2)
+library(dplyr)
 
+Better_Life_Index_2013 |>
+  filter(Indicator == "Life satisfaction") |>
+  ggplot(aes(x = reorder(Country, Value), y = Value)) + 
+  geom_bar(stat = "identity") +  
+  coord_flip() + 
+  labs(title = "Life Satisfaction by Country (2013)", 
+       x = "Country", 
+       y = "Life Satisfaction Value") +
+  theme_minimal()
+
+Better_Life_Index_2022 |>
+  filter(Indicator == "Life satisfaction") |>
+  ggplot(aes(x = reorder(Country, Value), y = Value)) + 
+  geom_bar(stat = "identity") +  
+  coord_flip() + 
+  labs(title = "Life Satisfaction by Country (2022)", 
+       x = "Country", 
+       y = "Life Satisfaction Value") +
+  theme_minimal()
+  
 ```
+The overall "Life Satisfaction" values appear to have slightly increased for most countries from 2013 to 2022, with Finland emerging as a standout performer by 2022. While the relative rankings for some countries like Greece and Hungary remain low, the overall progress indicates that life satisfaction is improving globally, albeit at different rates across regions.
 
 
 
 # CONCLUSION
+
 ...
