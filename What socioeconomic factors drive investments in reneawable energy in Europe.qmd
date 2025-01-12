@@ -657,72 +657,24 @@ The residual standard error of 0.1173 indicates moderate deviation of the observ
 In conclusion, while the model demonstrates statistical significance, its explanatory power is weak, and GDP and Labor Force have limited practical influence on renewable energy share. This points to the likelihood that other variables—such as governmental policies, geographic factors, energy resources, or societal preferences—play a more critical role in shaping renewable energy adoption. Future research should incorporate additional relevant variables to improve the model's explanatory capability and provide deeper insights into the drivers of renewable energy adoption.
 
 
-
-
-
-## To erase at the end : ideas for the analysis 
-
-Suggested Graphs:
-
-    Correlation Heatmap:
-        Use a heatmap to visualize the correlations between variables like GDP, life satisfaction, air pollution, and renewable energy investments.
-
-
-### Analysis Over Time
-Tasks:
-
-    Trend Analysis:
-        Analyze how renewable energy investments have changed over time.
-        Compare this to trends in socioeconomic variables like GDP, air pollution, and education.
-
-
-### Statistical Analysis
-
-- Correlation Analysis
-
-    Use correlation coefficients to determine the strength of relationships between variables (e.g., between renewable energy share and air pollution, GDP).
-
-Code Example in R:
-
-cor_matrix <- cor(data[, c("Renewable_Energy_Share", "GDP", "Life_Expectancy", "Air_Pollution")], use = "complete.obs")
-heatmap(cor_matrix, main = "Correlation Heatmap", col = colorRampPalette(c("blue", "white", "red"))(50))
-
-
-- Chi-Square Test for Independence
-
-    Use a Chi-Square test to explore categorical relationships. For example, you could test if the share of renewable energy is associated with categorical factors like "employment rate" or "education level" groups.
-
-Code Example:
-
-chisq_test <- chisq.test(table(data$Renewable_Energy_Category, data$Education_Level))
-print(chisq_test)
-
-    Check if the p-value < 0.05 to confirm significant relationships.
-
-
-### Comparing Across Countries
-
-Tasks:
-
-    Clustering:
-        Use clustering methods (e.g., k-means) to group countries based on their socioeconomic profiles and renewable energy investments.
-
-Code Example:
-
-library(cluster)
-cluster_data <- data[, c("GDP", "Air_Pollution", "Renewable_Energy_Share")]
-kmeans_result <- kmeans(cluster_data, centers = 3)
-fviz_cluster(kmeans_result, data = cluster_data)
-
-
-
-
-
-
-
 # CONCLUSION
 
-Which socioeconomic factors have the strongest influence on renewable energy investments?
-How do these factors vary by country and over time?
-Discuss policy implications: What policies should governments adopt to drive renewable energy investment?
+With this research, based on solid evidences from institutional datasets, we had in aim to answer to the maximum the following questions :
+
+- Which socioeconomic factors have the strongest influence on renewable energy investments?
+- How do these factors vary by country and over time?
+- What policies should governments adopt to drive renewable energy investment?
+
+This research explored the influence of socioeconomic factors on renewable energy investments in Europe, analyzing datasets covering education, GDP, health, air pollution, and renewable energy shares. The findings reveal complex relationships between these factors, with some offering partial insights but lacking strong explanatory power.
+
+The analysis shows that countries with higher education levels and better life satisfaction tend to exhibit higher shares of renewable energy. This aligns with the notion that education fosters awareness and support for renewable energy policies. However, the relationship between renewable energy and health expenditure, as well as GDP, was weak or unclear, suggesting that these factors alone cannot explain the variability in renewable energy adoption. The multiple linear regression model confirmed the limited influence of GDP and labor force size on renewable energy shares, with only 4.45% of the variability explained by these predictors.
+
+Air pollution trends indicate progress in reducing pollution across Europe, but significant challenges remain in certain countries like Poland and Hungary. These findings emphasize the importance of effective environmental policies, geographic factors, and societal priorities in shaping renewable energy investment. The observed variations across countries and over time highlight that no single factor dominates renewable energy adoption, pointing to a need for a multidimensional approach in future research.
+
+There also are limits to our research analysis. To begin with, we couldn't find consolidated datasets on information that could have been really interesting to analyze, such as : the Education level or the level of investment in renewable energy.
+But mainly, what would have been important to consider for this research, is policies et economic decisions made by the countries studied. It could have oriented and explained better the research results.
+
+In conclusion, while socioeconomic factors like education and life satisfaction show some correlation with renewable energy adoption, other critical drivers — such as governmental policies, geographic conditions, and public awareness—play a more significant role. To achieve sustainable energy goals, policymakers should design tailored interventions that address country-specific challenges and leverage socioeconomic strengths to accelerate the transition to renewable energy.
+
+
 ...
