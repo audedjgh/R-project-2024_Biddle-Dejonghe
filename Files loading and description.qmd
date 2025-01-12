@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
+
 ```{r}
 #| message: false
 library(here)
@@ -33,6 +34,7 @@ To begin with, click [here](https://github.com/audedjgh/R-project-2024_Biddle-De
 ```{r}
 #| message: false
 #| warning: false
+
 # Load required libraries
 library(readr)
 library(readxl)
@@ -371,7 +373,11 @@ However correlation is not proven and a bit blurry, so we're going to deepen the
 
 ## Relationship between GDP and share of renewable energy
 ```{r}
-{library(dplyr)
+#| message: false
+#| warning: false
+
+
+library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(scales)
@@ -395,18 +401,19 @@ renewable_long <- Overall_share_of_renewable_sources |>
 data_merged <- merge(GDP_filtered, renewable_long, by = c("Country Name", "Year"))
 
 # Plot GDP vs Renewable Energy Share for the merged dataset
-ggplot(data_merged, aes(x = GDP_Value, y = Renewable_Share)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = TRUE, color = "blue") +  # Include confidence interval
-  labs(
-    title = "GDP vs. Share of Renewable Energy", 
-    x = "GDP Value (in USD)", 
-    y = "Share of Renewable Energy (%)"
-  ) +
-  scale_x_continuous(labels = label_number(scale = 1e-12, suffix = "T")) +  # GDP in trillions
-  scale_y_continuous(labels = label_percent()) +  # Remove scale = 1 to display percentages correctly
-  theme_minimal()
-}
+suppressWarnings({
+  ggplot(data_merged, aes(x = GDP_Value, y = Renewable_Share)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +  # Include confidence interval
+    labs(
+      title = "GDP vs. Share of Renewable Energy", 
+      x = "GDP Value (in USD)", 
+      y = "Share of Renewable Energy (%)"
+    ) +
+    scale_x_continuous(labels = label_number(scale = 1e-12, suffix = "T")) +  # GDP in trillions
+    scale_y_continuous(labels = label_percent()) +  # Remove scale = 1 to display percentages correctly
+    theme_minimal()
+})
 ```
 The scatter plot illustrates the correlation between GDP and the share of renewable energy for EU countries from 2004 to 2022. Most data points are grouped toward the lower end of the GDP bracket, which indicates most of these nations have relatively low GDP values. In this region, there is a wide variation in renewable energy shares, from close to zero to exceeding 40%.
 
@@ -505,6 +512,9 @@ One could also think that investing in renewable energy would be similar to inve
 Intuition question : Is the countries' health expenditure is related to their share of renewable energy ?
 
 ```{r}
+#| message: false
+#| warning: false
+
 # First, convert Health table into one filtered on Health expenditure pivoted in long
 health_expenditure_long <- Health |>
   filter(`Indicator Name` == 	
@@ -521,21 +531,22 @@ merged_Health_exp_Renewable <- overall_renewable_share_long %>%
   inner_join(health_expenditure_long, by = c("Country Name", "Year"))
 
 # Scatter plot with regression line
-ggplot(merged_Health_exp_Renewable, aes(x = Health_Expenditure_Per_Capita, y = Share, color = `Country Name`)) +
-  geom_point(size = 3, alpha = 0.7) +
-  geom_smooth(method = "lm", se = FALSE, color = "black", linetype = "dashed") +
-  labs(
-    title = "Relationship Between Health Expenditure and Renewable Energy Share",
-    x = "Current Health Expenditure Per Capita (USD)",
-    y = "Renewable Energy Share (%)",
-    color = "Country"
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
-    legend.position = "bottom"
-  )
-
+suppressWarnings({
+  ggplot(merged_Health_exp_Renewable, aes(x = Health_Expenditure_Per_Capita, y = Share, color = `Country Name`)) +
+    geom_point(size = 3, alpha = 0.7) +
+    geom_smooth(method = "lm", se = FALSE, color = "black", linetype = "dashed") +
+    labs(
+      title = "Relationship Between Health Expenditure and Renewable Energy Share",
+      x = "Current Health Expenditure Per Capita (USD)",
+      y = "Renewable Energy Share (%)",
+      color = "Country"
+    ) +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+      legend.position = "bottom"
+    )
+})
 ```
 
 ```{r}
