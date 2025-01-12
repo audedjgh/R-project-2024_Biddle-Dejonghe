@@ -492,6 +492,9 @@ ggplot(long_data |> filter(!is.na(EducationLevel_2022)), aes(x = EducationLevel_
   scale_fill_manual(values = c("High" = "green", "Medium" = "yellow", "Low" = "red"))
 
 ```
+This box plot presents the relationship between education levels (categorised as High, Medium, and Low) and the share of renewable energy usage (%) across EU countries. As we can see, nations with a High education level tend to have a greater share of renewable energy usage than those with Medium or Low scores. The median proportion of renewable energy for High is considerably higher, around 40%, with a wider interquartile range, highlighting variability in renewable energy adoption among this group of countries.
+
+In contrast, EU countries classed as Low exhibit the lowest renewable energy shares, with a median of roughly 10% and a small interquartile range, suggesting little variability. As for Medium nations, they fall in between, with a median around 20%, showing a trend where higher education is linked to greater renewable energy use. This suggests a positive relationship between educational attainment and adoption of renewable energy, likely due to increased awareness, technological access, and a greater emphasis on renewable energy policies within highly educated populations. This reinforces the significance of education as a key driver of sustainable energy practices worldwide.
 
 
 ## To erase at the end : ideas for the analysis 
