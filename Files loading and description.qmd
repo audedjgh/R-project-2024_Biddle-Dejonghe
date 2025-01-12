@@ -417,14 +417,14 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-# Step 1: Filter Education dataset
+# Step 1: Filter Education dataset (adjust for existing column names)
 Education_filtered <- Education |>
   filter(`Indicator Name` == "Educational attainment, at least completed upper secondary, population 25+, total (%) (cumulative)") |>
-  select(-c(`2000`, `2001`, `2002`, `2003`, `2023`)) # Remove years 2000, 2001, 2002, 2003, and 2023
+  select(-starts_with("20"))  # Adjust this based on actual column names
 
 # Step 2: Filter Renewable Energy dataset (years 2004-2022)
 RenewableEnergy_filtered <- Overall_share_of_renewable_sources |>
-  select(`Country Name`, `2004`:`2022`) # Filter only years 2004-2022
+  select(1, 2:20)  # Adjust based on the correct column indices for 'Country Name' and the years 2004-2022
 
 # Step 3: Combine both datasets by 'Country' (or another key column)
 combined_data <- Education_filtered |>
@@ -432,19 +432,16 @@ combined_data <- Education_filtered |>
 
 # Step 4: Rename the year columns to avoid conflicts
 combined_data <- combined_data |>
-  rename_at(vars(starts_with("2004")), ~ paste0("RenewableShare_", .))
+  rename_at(vars(starts_with("20")), ~ paste0("RenewableShare_", .))
 
 # Step 5: Reshape data to long format for ggplot
 long_data <- combined_data |>
   pivot_longer(cols = starts_with("RenewableShare_"), names_to = "Year", values_to = "RenewableShare")
 
-# Step 6: Create categories for education levels based on mean and standard deviation thresholds
+# Step 6: Categorize education levels based on thresholds
 
-# Extract the relevant columns for education data (2005-2022)
-relevant_columns <- combined_data[, c("RenewableShare_2004.x", "2005.x", "2006.x", "2007.x", "2008.x", "2009.x", 
-                                      "2010.x", "2011.x", "2012.x", "2013.x", "2014.x", 
-                                      "2015.x", "2016.x", "2017.x", "2018.x", "2019.x", 
-                                      "2020.x", "2021.x", "2022.x")]
+# Extract the relevant columns for renewable energy data (2004-2022)
+relevant_columns <- combined_data[, grep("RenewableShare_", names(combined_data))]
 
 # Convert the data to numeric (ignoring non-numeric entries)
 relevant_columns <- as.data.frame(lapply(relevant_columns, as.numeric))
@@ -457,24 +454,42 @@ sd_values <- apply(relevant_columns, 2, sd, na.rm = TRUE)
 high_thresholds <- mean_values + sd_values
 low_thresholds <- mean_values - sd_values
 
-# Categorize each education value based on the thresholds
+# Add a column for education level categories for each year from 2004 to 2022
+combined_data <- combined_data |>
+  mutate(across(starts_with("RenewableShare_"), ~ case_when(
+    . >= high_thresholds[as.character(cur_column())] ~ "High",
+    . < high_thresholds[as.character(cur_column())] & . >= low_thresholds[as.character(cur_column())] ~ "Medium",
+    . < low_thresholds[as.character(cur_column())] ~ "Low",
+    TRUE ~ NA_character_  # Assign NA if data does not fit into categories
+  ), .names = "EducationLevel_{col}"))
+
+# Step 6.1: Ensure data is correctly joined
+# Extract the latest education level category (e.g., for 2022)
+combined_data <- combined_data |>
+  mutate(EducationLevel_2022 = get("EducationLevel_RenewableShare_2022", combined_data))
+
+# Step 6.2: Handle NA values in RenewableShare for plotting
 long_data <- long_data |>
-  mutate(EducationLevel = case_when(
-    `Value` >= high_thresholds[as.integer(substr(Year, 1, 4)) - 2004 + 1] ~ "High", # Check if value is above the high threshold
-    `Value` <= low_thresholds[as.integer(substr(Year, 1, 4)) - 2004 + 1] ~ "Low",  # Check if value is below the low threshold
-    TRUE ~ "Medium"  # Otherwise, categorize as Medium
-  ))
+  mutate(RenewableShare = ifelse(is.na(RenewableShare), 0, RenewableShare))
+
+# Step 6.3: Verify if EducationLevel_2022 has valid data
+long_data <- long_data |>
+  left_join(combined_data |> select(`Country Name`, EducationLevel_2022), by = "Country Name")
 
 # Step 7: Create the boxplot
-ggplot(long_data, aes(x = EducationLevel, y = RenewableShare, fill = EducationLevel)) +
-  geom_boxplot() +
+# Ensure the EducationLevel_2022 column is a factor with levels sorted as High, Medium, Low
+long_data$EducationLevel_2022 <- factor(long_data$EducationLevel_2022, levels = c("High", "Medium", "Low"))
+
+# Create the boxplot with sorted levels
+ggplot(long_data |> filter(!is.na(EducationLevel_2022)), aes(x = EducationLevel_2022, y = RenewableShare, fill = EducationLevel_2022)) +
+  geom_boxplot(na.rm = TRUE) +
   labs(
     title = "Distribution of Renewable Energy Share by Education Level",
     x = "Education Level",
     y = "Renewable Energy Share (%)"
   ) +
   theme_minimal() +
-  scale_fill_manual(values = c("Low" = "red", "Medium" = "yellow", "High" = "green"))
+  scale_fill_manual(values = c("High" = "green", "Medium" = "yellow", "Low" = "red"))
 
 ```
 
