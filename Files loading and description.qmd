@@ -497,6 +497,57 @@ This box plot presents the relationship between education levels (categorised as
 In contrast, EU countries classed as Low exhibit the lowest renewable energy shares, with a median of roughly 10% and a small interquartile range, suggesting little variability. As for Medium nations, they fall in between, with a median around 20%, showing a trend where higher education is linked to greater renewable energy use. This suggests a positive relationship between educational attainment and adoption of renewable energy, likely due to increased awareness, technological access, and a greater emphasis on renewable energy policies within highly educated populations. This reinforces the significance of education as a key driver of sustainable energy practices worldwide.
 
 
+## Relationship between Health expenditure and the share of renewable energy
+
+One could also think that investing in renewable energy would be similar to investment in the taking care of people. Then, another indicator showing the investment in the taking care of people could be the Health expenditure of governments.
+Intuition question : Is the countries' health expenditure is related to their share of renewable energy ?
+
+```{r}
+# First, convert Health table into one filtered on Health expenditure pivoted in long
+health_expenditure_long <- Health |>
+  filter(`Indicator Name` == 	
+"Current health expenditure per capita, PPP (current international $)")|>
+  select(-`Indicator Name`) |>
+  pivot_longer(
+    cols = -`Country Name`, 
+    names_to = "Year",
+    values_to = "Health_Expenditure_Per_Capita"
+  )
+
+# Merging Health expenditure and share of renewable energy datasets
+merged_Health_exp_Renewable <- overall_renewable_share_long %>%
+  inner_join(health_expenditure_long, by = c("Country Name", "Year"))
+
+# Scatter plot with regression line
+ggplot(merged_Health_exp_Renewable, aes(x = Health_Expenditure_Per_Capita, y = Share, color = `Country Name`)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linetype = "dashed") +
+  labs(
+    title = "Relationship Between Health Expenditure and Renewable Energy Share",
+    x = "Current Health Expenditure Per Capita (USD)",
+    y = "Renewable Energy Share (%)",
+    color = "Country"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    legend.position = "bottom"
+  )
+
+```
+
+```{r}
+# Calculate correlation
+correlation_Health_Renewable <- cor(merged_Health_exp_Renewable$Health_Expenditure_Per_Capita, merged_Health_exp_Renewable$Share, use = "complete.obs")
+
+# Print the correlation
+print(paste("Correlation coefficient:", round(correlation_Health_Renewable, 2)))
+```
+
+Thanks to this scatter plot and this correlation coefficient, we can see that there is no appearing correlation between the health expenditure of a country and its share of renewable energy.
+
+
+
 ## To erase at the end : ideas for the analysis 
 Suggested Graphs:
 
