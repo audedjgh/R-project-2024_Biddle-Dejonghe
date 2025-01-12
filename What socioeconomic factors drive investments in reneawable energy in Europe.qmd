@@ -386,25 +386,34 @@ overall_renewable_share_long |>
   theme_minimal()
 ```
 
-```{r}
+```{r, fig.width=10, fig.height=8, dpi=300}
 # Create the line plot
 ggplot(overall_renewable_share_long, aes(x = Year, y = Share, color = `Country Name`, group = `Country Name`)) +
-  geom_line(linewidth = 0.5) +
-  geom_point(size = 1) +
+  geom_line(linewidth = 1) +  # Increased line width for better visibility
+  geom_point(size = 1.8, alpha = 0.8) +  # Adjusted point size and transparency
   theme_minimal() +
   labs(
-    title = "Share of Renewable Energy Sources Over Time in EU countries",
+    title = "Share of Renewable Energy Sources Over Time in EU Countries",
     x = "Year",
     y = "Share of Renewable Energy (%)",
     color = "Country"
   ) +
   theme(
-    legend.position = "right",
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    plot.title = element_text(face = "bold")
-  )
-
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold", margin = margin(b = 15)),  # Larger title and spacing
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Rotate x-axis labels for readability
+    axis.text.y = element_text(size = 12),  # Increase size of y-axis labels
+    axis.title.x = element_text(size = 14, face = "bold"),  # Bold x-axis title
+    axis.title.y = element_text(size = 14, face = "bold"),  # Bold y-axis title
+    legend.position = "bottom",  # Move legend below plot
+    legend.title = element_text(size = 12, face = "bold"),  # Bold legend title
+    legend.text = element_text(size = 10),  # Adjust legend text size
+    legend.key.width = unit(1.2, "cm"),  # Increase spacing between legend keys
+    plot.margin = margin(20, 20, 20, 20)  # Add margins around the plot
+  ) +
+  guides(color = guide_legend(nrow = 6))  # Arrange legend in 3 rows for compactness
 ```
+
+
 Thanks to these graphs, we can visualize the evolution of EU countries through time regarding their share of renewable energy among total energy from 2004 and 2022. In other words, it shows how much shares of renewable energy their investment in this matter allowed them to have. 
 We can see that the shares are globally increasing for every EU country studied.
 But, the main difference with the life satisfaction critera studied before is that the top country is Sweden, with a large difference if we compare it to the other countries. 
@@ -559,7 +568,7 @@ In contrast, EU countries classed as Low exhibit the lowest renewable energy sha
 One could also think that investing in renewable energy would be similar to investment in the taking care of people. Then, another indicator showing the investment in the taking care of people could be the Health expenditure of governments.
 Intuition question : Is the countries' health expenditure is related to their share of renewable energy ?
 
-```{r}
+```{r, fig.width=10, fig.height=8, dpi=300}
 #| message: false
 #| warning: false
 
@@ -579,6 +588,9 @@ merged_Health_exp_Renewable <- overall_renewable_share_long %>%
   inner_join(health_expenditure_long, by = c("Country Name", "Year"))
 
 # Scatter plot with regression line
+
+
+
 suppressWarnings({
   ggplot(merged_Health_exp_Renewable, aes(x = Health_Expenditure_Per_Capita, y = Share, color = `Country Name`)) +
     geom_point(size = 3, alpha = 0.7) +
