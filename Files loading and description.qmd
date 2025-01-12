@@ -556,8 +556,13 @@ correlation_Health_Renewable <- cor(merged_Health_exp_Renewable$Health_Expenditu
 # Print the correlation
 print(paste("Correlation coefficient:", round(correlation_Health_Renewable, 2)))
 ```
+The graph illustrates the relationship between health expenditure per capita and renewable energy share across various countries. The data does not indicate a clear linear correlation between the two variables, as the points are widely scattered. 
+Most countries fall within the mid-range of health expenditure (approximately $2000–$5000 per capita), with renewable energy shares predominantly ranging between 10% and 30%. Some countries with lower health expenditure exhibit relatively high renewable energy shares, suggesting that factors other than health investment play a more significant role in renewable energy adoption. 
+Conversely, countries with higher health expenditures often display renewable energy shares closer to 20%, indicating a lack of consistent trends at higher levels of health spending. 
 
-Thanks to this scatter plot and this correlation coefficient, we can see that there is no appearing correlation between the health expenditure of a country and its share of renewable energy.
+The variability among countries with similar health expenditures further highlights the importance of other influences, such as policy decisions, geographic conditions, or economic priorities, in determining renewable energy adoption.
+
+We can conclude on this topic that there is no appearing correlation between the health expenditure of a country and its share of renewable energy.
 
 
 
