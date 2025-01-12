@@ -371,7 +371,10 @@ Some other countries like France Poland and Hungary, are more or less coherent w
 
 However correlation is not proven and a bit blurry, so we're going to deepen the analysis, enlarging the criterions to more measurable ones, as "Life satisfaction" is hard to measure and not 100% reliable data.
 
+
+
 ## Relationship between GDP and share of renewable energy
+
 ```{r}
 #| message: false
 #| warning: false
@@ -419,7 +422,10 @@ The scatter plot illustrates the correlation between GDP and the share of renewa
 
 As GDP grows, renewable energy share fluctuates less, with wealthier countries generally exhibiting lower shares. The trend line suggests a weak negative relationship: higher-GDP nations tend to depend less on renewable energy. Nevertheless, the heavy concentration of data at lower GDP levels and the limit presence of higher-GDP countries suggest that the trend is primarily driven by lower-GDP nations.
 
+
+
 ## Distribution of renewable energy share according to education level
+
 ```{r}
 # Load necessary libraries
 library(dplyr)
@@ -567,29 +573,24 @@ We can conclude on this topic that there is no appearing correlation between the
 
 
 ## To erase at the end : ideas for the analysis 
+
 Suggested Graphs:
 
-    Histograms or Boxplots:
-        Show the distribution of key variables (e.g., "share of renewable energy," "GDP," "employment rate").
     Correlation Heatmap:
         Use a heatmap to visualize the correlations between variables like GDP, life satisfaction, air pollution, and renewable energy investments.
 
-3. Analysis Over Time
+
+### Analysis Over Time
 Tasks:
 
     Trend Analysis:
         Analyze how renewable energy investments have changed over time.
         Compare this to trends in socioeconomic variables like GDP, air pollution, and education.
 
-    Graphs for Trends:
-        Line Charts:
-            Show the evolution of renewable energy investments over time for different countries.
-            Overlay trends of key socioeconomic variables (e.g., life expectancy, GDP).
-        Stacked Area Charts:
-            Display the share of renewable energy production by country over time.
 
-4. Statistical Analysis
-A. Correlation Analysis
+### Statistical Analysis
+
+- Correlation Analysis
 
     Use correlation coefficients to determine the strength of relationships between variables (e.g., between renewable energy share and air pollution, GDP).
 
@@ -598,7 +599,7 @@ Code Example in R:
 cor_matrix <- cor(data[, c("Renewable_Energy_Share", "GDP", "Life_Expectancy", "Air_Pollution")], use = "complete.obs")
 heatmap(cor_matrix, main = "Correlation Heatmap", col = colorRampPalette(c("blue", "white", "red"))(50))
 
-B. Linear Regression
+- Linear Regression
 
     Perform a multiple linear regression to quantify the influence of socioeconomic factors on renewable energy investments.
 
@@ -614,7 +615,7 @@ summary(model)
         Positive coefficients mean the variable drives renewable energy investment.
         Negative coefficients mean it hinders renewable energy investment.
 
-C. Chi-Square Test for Independence
+- Chi-Square Test for Independence
 
     Use a Chi-Square test to explore categorical relationships. For example, you could test if the share of renewable energy is associated with categorical factors like "employment rate" or "education level" groups.
 
@@ -625,7 +626,9 @@ print(chisq_test)
 
     Check if the p-value < 0.05 to confirm significant relationships.
 
-5. Comparing Across Countries
+
+### Comparing Across Countries
+
 Tasks:
 
     Clustering:
@@ -638,44 +641,15 @@ cluster_data <- data[, c("GDP", "Air_Pollution", "Renewable_Energy_Share")]
 kmeans_result <- kmeans(cluster_data, centers = 3)
 fviz_cluster(kmeans_result, data = cluster_data)
 
-    Barplots:
-        Compare countries in terms of key variables using grouped bar charts.
 
-Suggested Graphs:
 
-    Barplots:
-        Rank countries by their share of renewable energy or investment levels.
-    Scatter Plots:
-        Plot GDP vs. renewable energy share with country labels.
-
-6. Conclusion
-
-    Summarize findings:
-        Which socioeconomic factors have the strongest influence on renewable energy investments?
-        How do these factors vary by country and over time?
-    Discuss policy implications:
-        What policies should governments adopt to drive renewable energy investment?
-
-Recap of Necessary Graphs:
-
-    Histograms/Boxplots: Distribution of key variables.
-    Correlation Heatmap: Relationship between variables.
-    Line Charts: Trends over time for renewable energy and key factors.
-    Barplots: Comparison between countries.
-    Scatter Plots: Relationship between two variables.
-    Cluster Diagram: Group countries by profiles.
-
-Summary of Calculations:
-
-    Summary Statistics: Mean, median, etc., for variables.
-    Correlation Analysis: Quantify relationships.
-    Linear Regression: Identify drivers of renewable energy investments.
-    Chi-Square Test: Test independence between categorical variables.
-    Clustering: Group countries by socioeconomic indicators.
 
 
 
 
 # CONCLUSION
 
+Which socioeconomic factors have the strongest influence on renewable energy investments?
+How do these factors vary by country and over time?
+Discuss policy implications: What policies should governments adopt to drive renewable energy investment?
 ...
