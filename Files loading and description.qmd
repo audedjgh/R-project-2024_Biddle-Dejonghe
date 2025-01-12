@@ -571,6 +571,49 @@ The variability among countries with similar health expenditures further highlig
 We can conclude on this topic that there is no appearing correlation between the health expenditure of a country and its share of renewable energy.
 
 
+## Multiple linear regression model : Share of renewable energy, GDP and labor force
+
+This multiple linear regression model evaluates the relationship between Share of Renewable Energy (Share) (dependent variable) and two independent variables: GDP and Labor Force. The coefficients and their statistical significance provide insights into the effects of these predictors on the renewable energy share.
+
+```{r}
+
+# Pivot the GDP table
+GDP_long <- GDP |>
+  select(-`Indicator Name`) |>
+  pivot_longer(
+    cols = -`Country Name`, 
+    names_to = "Year",
+    values_to = "GDP"
+  )
+
+# Create and pivot a labor force table
+Labor_force_long <- Education |>
+  filter(`Indicator Name` == "Labor force, total") |>
+  select(-`Indicator Name`) |>
+  pivot_longer(
+    cols = -`Country Name`, 
+    names_to = "Year",
+    values_to = "Labor_force"
+  )
+
+# Merging GDP, renewable energy and labor force
+multi_lin_model_merge <- overall_renewable_share_long |>
+  inner_join(GDP_long, by = c("Country Name", "Year")) |>
+  inner_join(Labor_force_long, by = c("Country Name", "Year"))
+
+# Modelling the multiple linear regression
+multiple_var_model <- lm(Share ~ GDP + Labor_force , data = multi_lin_model_merge)
+summary(multiple_var_model)
+```
+The multiple linear regression model investigates the relationship between the share of renewable energy and two predictors: GDP and Labor Force. The analysis reveals that both variables are statistically significant. GDP has a very small positive effect on the share of renewable energy, with a coefficient of 4.879×10−144.879×10−14. This indicates that for every unit increase in GDP, the renewable energy share increases by a negligible amount. Similarly, Labor Force shows a small but negative effect on renewable energy share, with a coefficient of −5.933×10−9−5.933×10−9. This implies that for every unit increase in the size of the labor force, the share of renewable energy slightly decreases.
+
+Despite the statistical significance of these predictors (GDP p=0.014p=0.014, Labor Force p=0.000364p=0.000364), their practical influence on renewable energy share is minimal due to the very small magnitude of their coefficients. Furthermore, the model explains only 4.45% of the variability in renewable energy share, as indicated by the low R-squared value. This suggests that the model fails to capture most of the factors driving renewable energy adoption. The adjusted R-squared of 4.06% confirms the limited explanatory power of the model, even after accounting for the number of predictors.
+
+The residual standard error of 0.1173 indicates moderate deviation of the observed values from the predicted ones, but this value alone does not indicate a strong model fit. The overall F-statistic (p=1.388e−05p=1.388e−05) shows that the model is statistically significant as a whole, meaning that the predictors together explain a non-random portion of the variability in renewable energy share.
+
+In conclusion, while the model demonstrates statistical significance, its explanatory power is weak, and GDP and Labor Force have limited practical influence on renewable energy share. This points to the likelihood that other variables—such as governmental policies, geographic factors, energy resources, or societal preferences—play a more critical role in shaping renewable energy adoption. Future research should incorporate additional relevant variables to improve the model's explanatory capability and provide deeper insights into the drivers of renewable energy adoption.
+
+
 
 ## To erase at the end : ideas for the analysis 
 
