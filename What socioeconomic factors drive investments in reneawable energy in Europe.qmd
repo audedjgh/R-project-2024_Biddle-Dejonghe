@@ -165,6 +165,34 @@ colnames(Overall_share_of_renewable_sources)[-1] <- substr(colnames(Overall_shar
 -   [Health](https://data.worldbank.org/topic/health)
 -   [Share of renewable energy](https://ec.europa.eu/eurostat/web/energy/database/additional-data#Short%20assessment%20of%20renewable%20energy%20sources%20(SHARES))
 
+
+# RESEARCH QUESTION DEVELOPMENT
+
+## Introduction
+
+The transition to renewable energy is a critical goal for European countries in addressing climate change, energy security, and sustainable development. While technological advancements and policy frameworks play pivotal roles in shaping this transition, socioeconomic factors are equally influential in driving investments in renewable energy. This project has the goal to explore the connections between certain socioeconomic dimensions—such as GDP, health, education, welfare, and pollution—and the level of renewable energy investments across Europe. Additionally, it'll highlight areas for further exploration to understand and visualize these dynamics effectively.
+
+## The Role of Socioeconomic Factors
+
+Economic Development (GDP and Income Levels): Economic prosperity, often measured by GDP per capita, is one of the primary determinants of renewable energy investments. Countries with higher GDPs, such as Germany, France, and the Netherlands, tend to allocate more resources to infrastructure development and energy transition projects. Wealthier nations often have greater access to capital markets, which facilitates investments in expensive renewable technologies, such as offshore wind farms or advanced solar panels. In contrast, economically weaker nations may struggle to meet initial investment costs, despite benefiting from EU funding schemes.
+
+Health and Pollution Awareness: Pollution levels and associated health impacts often galvanize public and political support for cleaner energy sources. Countries experiencing severe air quality challenges, like Poland or Hungary (due to reliance on coal), may face greater pressure from citizens and advocacy groups to invest in renewables. The health burden from pollution, measured through indicators such as respiratory disease prevalence or life expectancy, can serve as a compelling argument for redirecting investments toward cleaner energy options.
+
+Education and Public Awareness: Education plays a critical role in shaping attitudes toward environmental sustainability. Societies with higher literacy rates and widespread access to quality education are more likely to support renewable energy policies and initiatives. Public understanding of climate science, energy efficiency, and long-term benefits of renewable technologies can influence government and private-sector investment priorities. For instance, Scandinavian countries, known for their strong education systems, consistently lead in renewable energy adoption.
+
+Social Welfare and Policy Support: Social welfare systems indirectly influence renewable energy investments. Countries with robust welfare systems, like Denmark or Sweden, can more easily absorb the social costs of transitioning from fossil fuels to renewables, such as retraining workers or subsidizing green energy access for low-income households. Additionally, higher levels of social trust and cooperative governance in these nations contribute to smoother implementation of renewable energy projects.
+
+## Potential Areas for Further Exploration
+
+Data Visualization: To understand these relationships better, a cross-country comparative analysis can be conducted using visual tools like scatterplots, heatmaps, or GIS maps. For instance, correlating GDP per capita with renewable energy capacity installed could reveal interesting patterns across Europe.
+
+Temporal Trends: Analyzing how investments in renewables have evolved over the past decades relative to socioeconomic changes could uncover critical insights about long-term drivers.
+
+Barriers in Low-GDP Nations: Examining the unique challenges faced by economically weaker European countries in scaling renewable investments, despite EU-wide climate goals, could highlight gaps in support mechanisms.
+
+
+
+
 # DESCRIPTION OF THE DATASETS
 
 ## Better Life Index
@@ -246,31 +274,6 @@ The dataset includes variables like life expectancy at birth, healthcare expendi
 ## Share of renewable energy
 
 This dataset tracks annual renewable energy production in GWh or TWh, the installed capacity of renewable energy plants in MW, and the proportion of renewables in the total energy mix. It also includes progress indicators to assess alignment with national and EU-wide renewable energy targets.
-
-# RESEARCH QUESTION DEVELOPMENT
-
-## Introduction
-
-The transition to renewable energy is a critical goal for European countries in addressing climate change, energy security, and sustainable development. While technological advancements and policy frameworks play pivotal roles in shaping this transition, socioeconomic factors are equally influential in driving investments in renewable energy. This project has the goal to explore the connections between certain socioeconomic dimensions—such as GDP, health, education, welfare, and pollution—and the level of renewable energy investments across Europe. Additionally, it'll highlight areas for further exploration to understand and visualize these dynamics effectively.
-
-## The Role of Socioeconomic Factors
-
-Economic Development (GDP and Income Levels): Economic prosperity, often measured by GDP per capita, is one of the primary determinants of renewable energy investments. Countries with higher GDPs, such as Germany, France, and the Netherlands, tend to allocate more resources to infrastructure development and energy transition projects. Wealthier nations often have greater access to capital markets, which facilitates investments in expensive renewable technologies, such as offshore wind farms or advanced solar panels. In contrast, economically weaker nations may struggle to meet initial investment costs, despite benefiting from EU funding schemes.
-
-Health and Pollution Awareness: Pollution levels and associated health impacts often galvanize public and political support for cleaner energy sources. Countries experiencing severe air quality challenges, like Poland or Hungary (due to reliance on coal), may face greater pressure from citizens and advocacy groups to invest in renewables. The health burden from pollution, measured through indicators such as respiratory disease prevalence or life expectancy, can serve as a compelling argument for redirecting investments toward cleaner energy options.
-
-Education and Public Awareness: Education plays a critical role in shaping attitudes toward environmental sustainability. Societies with higher literacy rates and widespread access to quality education are more likely to support renewable energy policies and initiatives. Public understanding of climate science, energy efficiency, and long-term benefits of renewable technologies can influence government and private-sector investment priorities. For instance, Scandinavian countries, known for their strong education systems, consistently lead in renewable energy adoption.
-
-Social Welfare and Policy Support: Social welfare systems indirectly influence renewable energy investments. Countries with robust welfare systems, like Denmark or Sweden, can more easily absorb the social costs of transitioning from fossil fuels to renewables, such as retraining workers or subsidizing green energy access for low-income households. Additionally, higher levels of social trust and cooperative governance in these nations contribute to smoother implementation of renewable energy projects.
-
-## Potential Areas for Further Exploration
-
-Data Visualization: To understand these relationships better, a cross-country comparative analysis can be conducted using visual tools like scatterplots, heatmaps, or GIS maps. For instance, correlating GDP per capita with renewable energy capacity installed could reveal interesting patterns across Europe.
-
-Temporal Trends: Analyzing how investments in renewables have evolved over the past decades relative to socioeconomic changes could uncover critical insights about long-term drivers.
-
-Barriers in Low-GDP Nations: Examining the unique challenges faced by economically weaker European countries in scaling renewable investments, despite EU-wide climate goals, could highlight gaps in support mechanisms.
-
 
 
 
@@ -687,6 +690,3 @@ There also are limits to our research analysis. To begin with, we couldn't find 
 But mainly, what would have been important to consider for this research, is policies et economic decisions made by the countries studied. It could have oriented and explained better the research results.
 
 In conclusion, while socioeconomic factors like education and life satisfaction show some correlation with renewable energy adoption, other critical drivers — such as governmental policies, geographic conditions, and public awareness—play a more significant role. To achieve sustainable energy goals, policymakers should design tailored interventions that address country-specific challenges and leverage socioeconomic strengths to accelerate the transition to renewable energy.
-
-
-...
