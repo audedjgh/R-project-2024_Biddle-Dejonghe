@@ -1,5 +1,5 @@
 ---
-title: "Files loading and description"
+title: "What socioeconomic factors drive investments in renewable energy in Europe ?"
 author: "Aude Dejonghe and Carlos Biddle"
 format: 
   html: default
@@ -25,6 +25,8 @@ This document will show:
 -   The sources used for the project with their description
 -   The description of the work of joining and cleaning the data
 -   The explanation of our research question
+-   Data analysis from different points of view, with data-crossing
+-   Conclusion to our research project
 
 To begin with, click [here](https://github.com/audedjgh/R-project-2024_Biddle-Dejonghe) to access our github project.
 
