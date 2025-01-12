@@ -282,13 +282,52 @@ In this document, we'll try to see and assess any links between certain socioeco
 We can start by stating our intuition hypothesis : Countries with higher life satisfaction, better education, and lower air pollution levels are more likely to invest in renewable energy.
 
 
-## View on life disparities between EU countries
+## Situation on life disparities between EU countries
 
-Our analysis begins with a chart representing the average score of life satisfaction each country obtained in 2013 and in 2022.
+### Visualization Air pollution's evolution (Better Life Index)
+
+The graphs illustrate the levels of air pollution across various countries in 2013 and 2022, providing a comparative perspective on the evolution of air quality over time. Countries are ranked in descending order of air pollution levels for each year, highlighting both the most and least polluted nations within the dataset. 
 
 ```{r}
 library(ggplot2)
 library(dplyr)
+
+Better_Life_Index_2013 |>
+  filter(Indicator == "Air pollution") |>
+  ggplot(aes(x = reorder(Country, Value), y = Value, fill = Value)) + 
+  geom_bar(stat = "identity") +  
+  coord_flip() + 
+  labs(title = "Air pollution by Country (2013)", 
+       x = "Country", 
+       y = "Air pollution Value") +
+  theme_minimal() +
+  scale_fill_gradient(low = "lightblue", high = "darkblue") # Gradient color scale
+
+Better_Life_Index_2022 |>
+  filter(Indicator == "Air pollution") |>
+  ggplot(aes(x = reorder(Country, Value), y = Value, fill = Value)) + 
+  geom_bar(stat = "identity") +  
+  coord_flip() + 
+  labs(title = "Air pollution by Country (2022)", 
+       x = "Country", 
+       y = "Air pollution Value") +
+  theme_minimal() +
+  scale_fill_gradient(low = "lightgreen", high = "darkgreen") # Gradient color scale
+
+```
+
+There is a clear reduction in air pollution values across most countries between 2013 and 2022, indicating progress in environmental management and pollution control measures.
+Despite overall improvements, Poland remains the most polluted country, reflecting persistent challenges in reducing air pollution.
+Countries like Sweden, Estonia, and Finland consistently maintain low pollution levels, showcasing effective environmental policies and favorable conditions.
+
+These graphs highlight the progress made in reducing air pollution across many countries over the decade. However, they also underline the need for sustained efforts in countries like Poland and Hungary, where air pollution remains a significant concern. Understanding the policies and factors contributing to success in low-pollution countries can provide valuable insights for addressing persistent environmental challenges.
+
+
+### Visuaization of Life satisfaction's evolution (Better Life Index)
+
+Our analysis begins with a chart representing the average score of life satisfaction each country obtained in 2013 and in 2022.
+
+```{r}
 
 Better_Life_Index_2013 |>
   filter(Indicator == "Life satisfaction") |>
@@ -318,6 +357,9 @@ The overall "Life Satisfaction" values appear to have slightly increased for mos
 We can start by stating our hypothesis : Countries with higher life satisfaction, better education, and lower air pollution levels are more likely to invest in renewable energy.
 
 Let's then find out if the top countries in Life satisfaction are the same ones that are top ranks when seeing their share or renewable energy.
+
+
+### Visualization of the evolution of the Share of renewabe energy across countries
 
 ```{r}
 library(tidyr)
@@ -562,6 +604,7 @@ correlation_Health_Renewable <- cor(merged_Health_exp_Renewable$Health_Expenditu
 # Print the correlation
 print(paste("Correlation coefficient:", round(correlation_Health_Renewable, 2)))
 ```
+
 The graph illustrates the relationship between health expenditure per capita and renewable energy share across various countries. The data does not indicate a clear linear correlation between the two variables, as the points are widely scattered. 
 Most countries fall within the mid-range of health expenditure (approximately $2000–$5000 per capita), with renewable energy shares predominantly ranging between 10% and 30%. Some countries with lower health expenditure exhibit relatively high renewable energy shares, suggesting that factors other than health investment play a more significant role in renewable energy adoption. 
 Conversely, countries with higher health expenditures often display renewable energy shares closer to 20%, indicating a lack of consistent trends at higher levels of health spending. 
@@ -615,6 +658,8 @@ In conclusion, while the model demonstrates statistical significance, its explan
 
 
 
+
+
 ## To erase at the end : ideas for the analysis 
 
 Suggested Graphs:
@@ -642,21 +687,6 @@ Code Example in R:
 cor_matrix <- cor(data[, c("Renewable_Energy_Share", "GDP", "Life_Expectancy", "Air_Pollution")], use = "complete.obs")
 heatmap(cor_matrix, main = "Correlation Heatmap", col = colorRampPalette(c("blue", "white", "red"))(50))
 
-- Linear Regression
-
-    Perform a multiple linear regression to quantify the influence of socioeconomic factors on renewable energy investments.
-
-Model:
-Renewable Energy Share=β0+β1(GDP)+β2(Air Pollution)+β3(Education)+ϵ
-Renewable Energy Share=β0​+β1​(GDP)+β2​(Air Pollution)+β3​(Education)+ϵ
-Code Example in R:
-
-model <- lm(Renewable_Energy_Share ~ GDP + Air_Pollution + Education, data = data)
-summary(model)
-
-    Interpret the regression coefficients:
-        Positive coefficients mean the variable drives renewable energy investment.
-        Negative coefficients mean it hinders renewable energy investment.
 
 - Chi-Square Test for Independence
 
